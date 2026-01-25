@@ -1,5 +1,19 @@
+import { Routes, Route, Navigate } from "react-router";
+import LandingPage from "./pages/LandingPage";
+import ModulesPage from "./pages/ModulesPage";
+import WordsPage from "./pages/WordsPage";
+
 function App() {
-  return <h1 className="text-amber-300 text-5xl">Welcome to VocaRich</h1>;
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Routes>
+        <Route index element={<LandingPage />} />
+        <Route path="/app" element={<ModulesPage />} />
+        <Route path="/app/m/:moduleId" element={<WordsPage />} />
+        <Route path="*" element={<Navigate to="/app" replace />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
