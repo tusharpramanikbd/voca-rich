@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
 import { useLiveQuery } from "dexie-react-hooks";
-import { motion } from "framer-motion";
 import {
   createWord,
   updateWord,
@@ -14,6 +13,7 @@ import WordBottomSheet from "../components/Words/WordBottomSheet";
 import Header from "../components/Common/Header";
 import WordSearch from "../components/Words/WordSearch";
 import WordList from "../components/Words/WordList";
+import AddWordFAB from "../components/Words/AddWordFAB";
 
 export default function WordsPage() {
   const { moduleId } = useParams();
@@ -72,15 +72,7 @@ export default function WordsPage() {
       />
 
       {/* FAB */}
-      <div className="fixed bottom-28 right-6 z-40">
-        <motion.button
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setIsAddSheetOpen(true)}
-          className="w-16 h-16 bg-linear-to-r from-teal-500 to-blue-600 text-white rounded-3xl shadow-2xl hover:shadow-3xl flex items-center justify-center text-2xl"
-        >
-          +
-        </motion.button>
-      </div>
+      <AddWordFAB setIsAddSheetOpen={setIsAddSheetOpen} />
 
       {/* Add Sheet */}
       <WordBottomSheet

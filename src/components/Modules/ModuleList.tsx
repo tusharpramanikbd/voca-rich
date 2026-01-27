@@ -1,5 +1,5 @@
 import type { Module } from "../../db/vocarichDb";
-import ModuleEmpty from "./ModuleEmpty";
+import EmptyState from "../Common/EmptyState";
 import ModuleItem from "./ModuleItem";
 
 type TModuleList = {
@@ -18,7 +18,7 @@ const ModuleList = ({ modules, handleDeleteModule }: TModuleList) => {
         />
       ))}
 
-      {modules && modules.length === 0 && <ModuleEmpty />}
+      {modules && modules.length === 0 && <EmptyState emptyType="module" />}
     </div>
   );
 };
