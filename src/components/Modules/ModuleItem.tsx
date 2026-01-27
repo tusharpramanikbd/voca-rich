@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import type { Module } from "../db/vocarichDb";
+import type { Module } from "../../db/vocarichDb";
 
 type TModuleItem = {
   module: Module;

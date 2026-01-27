@@ -1,8 +1,7 @@
 import useModules from "../hooks/useModules.js";
-import Header from "../components/Header.js";
-import AddModule from "../components/AddModule.js";
-import ModuleList from "../components/ModuleList.js";
-import BottomTabBar from "../components/BottomTabBar.js";
+import Header from "../components/Common/Header.js";
+import AddModule from "../components/Modules/AddModule.js";
+import ModuleList from "../components/Modules/ModuleList.js";
 
 const ModulesPage = () => {
   const {
@@ -15,7 +14,7 @@ const ModulesPage = () => {
 
   return (
     <div className="min-h-screen bg-linear-to-b from-teal-50 to-white">
-      <Header title="Modules" unit="modules" items={modules} />
+      <Header title="Modules" unit="modules" itemCount={modules?.length ?? 0} />
 
       <AddModule
         newModuleName={newModuleName}
@@ -24,8 +23,6 @@ const ModulesPage = () => {
       />
 
       <ModuleList modules={modules} handleDeleteModule={handleDeleteModule} />
-
-      <BottomTabBar />
     </div>
   );
 };

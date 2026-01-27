@@ -1,4 +1,4 @@
-import type { Module } from "../db/vocarichDb";
+import type { Module } from "../../db/vocarichDb";
 import ModuleEmpty from "./ModuleEmpty";
 import ModuleItem from "./ModuleItem";
 
