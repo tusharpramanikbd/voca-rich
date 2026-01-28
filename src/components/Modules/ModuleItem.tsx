@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import type { Module } from "../../db/vocarichDb";
+import { memo } from "react";
 
 type TModuleItem = {
   module: Module;
@@ -9,7 +10,7 @@ type TModuleItem = {
 const ModuleItem = ({ module, handleDeleteModule }: TModuleItem) => {
   return (
     <Link
-      to={`/app/m/${module?.id}`}
+      to={`/app/m/${module?.id}+${module?.name}`}
       className="block bg-white/70 backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-white/50 group"
     >
       <div className="flex items-center justify-between">
@@ -36,4 +37,4 @@ const ModuleItem = ({ module, handleDeleteModule }: TModuleItem) => {
   );
 };
 
-export default ModuleItem;
+export default memo(ModuleItem);

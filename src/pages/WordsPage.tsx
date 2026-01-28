@@ -16,7 +16,10 @@ import WordList from "../components/Words/WordList";
 import AddWordFAB from "../components/Words/AddWordFAB";
 
 export default function WordsPage() {
-  const { moduleId } = useParams();
+  const { module } = useParams();
+  const moduleId = module ? module.split("+")[0] : null;
+  const moduleName = module ? module.split("+")[1] : null;
+
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
@@ -54,7 +57,7 @@ export default function WordsPage() {
     <div className="min-h-screen bg-linear-to-b from-teal-50 to-white">
       {/* Header */}
       <Header
-        title="Words"
+        title={moduleName || "Module"}
         unit="words"
         itemCount={wordCount ?? 0}
         canGoBack={true}
@@ -74,26 +77,23 @@ export default function WordsPage() {
       {/* FAB */}
       <AddWordFAB setIsAddSheetOpen={setIsAddSheetOpen} />
 
-      {/* Add Sheet */}
+      {/* Add/Edit Bottom Sheet */}
       <WordBottomSheet
-        isOpen={isAddSheetOpen}
-        onClose={() => setIsAddSheetOpen(false)}
-        onSave={async (word, meaning) => {
-          if (!moduleId) return;
-          await createWord(moduleId, word, meaning);
+        isOpen={isAddSheetOpen || isEditSheetOpen}
+        onClose={() => {
+          setIsAddSheetOpen(false);
+          setIsEditSheetOpen(false);
         }}
-        mode="add"
-      />
-
-      {/* Edit Sheet */}
-      <WordBottomSheet
-        isOpen={isEditSheetOpen}
-        onClose={() => setIsEditSheetOpen(false)}
         onSave={async (word, meaning) => {
+          if (isAddSheetOpen) {
+            if (!moduleId) return;
+            await createWord(moduleId, word, meaning);
+            return;
+          }
           if (!editingWord?.id) return;
           await updateWord(editingWord.id, { word, meaning });
         }}
-        mode="edit"
+        mode={isAddSheetOpen ? "add" : "edit"}
         initialWord={editingWord?.word}
         initialMeaning={editingWord?.meaning}
       />

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, memo, useEffect } from "react";
 
 interface WordSheetProps {
   isOpen: boolean;
@@ -10,19 +10,17 @@ interface WordSheetProps {
   initialMeaning?: string;
 }
 
-export default function WordBottomSheet({
+const WordBottomSheet = ({
   isOpen,
   onClose,
   onSave,
   mode,
   initialWord = "",
   initialMeaning = "",
-}: WordSheetProps) {
-  const [word, setWord] = useState(() => initialWord);
-  const [meaning, setMeaning] = useState(() => initialMeaning);
+}: WordSheetProps) => {
+  const [word, setWord] = useState("");
+  const [meaning, setMeaning] = useState("");
   const [saving, setSaving] = useState(false);
-
-  console.log("WordBottomSheet rendered", initialWord, initialMeaning);
 
   async function handleSave() {
     const trimmedWord = word.trim();
@@ -37,6 +35,18 @@ export default function WordBottomSheet({
       setSaving(false);
     }
   }
+
+  useEffect(() => {
+    if (isOpen && mode === "edit") {
+      setWord(initialWord);
+      setMeaning(initialMeaning);
+    }
+
+    return () => {
+      setWord("");
+      setMeaning("");
+    };
+  }, [isOpen, initialWord, initialMeaning, mode]);
 
   return (
     <AnimatePresence>
@@ -115,4 +125,6 @@ export default function WordBottomSheet({
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default memo(WordBottomSheet);

@@ -1,4 +1,5 @@
 import type { Word } from "../../db/vocarichDb";
+import { memo } from "react";
 
 type TWordItem = {
   word: Word;
@@ -51,4 +52,4 @@ const WordItem = ({
   );
 };
 
-export default WordItem;
+export default memo(WordItem);

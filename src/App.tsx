@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route index element={<LandingPage />} />
         <Route path="/app" element={<ModulesPage />} />
-        <Route path="/app/m/:moduleId" element={<WordsPage />} />
+        <Route path="/app/m/:module" element={<WordsPage />} />
         <Route path="*" element={<Navigate to="/app" replace />} />
       </Routes>
     </div>
