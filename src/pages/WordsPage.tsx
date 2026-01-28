@@ -5,7 +5,7 @@ import WordList from "../components/Words/WordList";
 import AddWordFAB from "../components/Words/AddWordFAB";
 import useWords from "../hooks/useWords";
 
-export default function WordsPage() {
+const WordsPage = () => {
   const {
     moduleName,
     moduleId,
@@ -63,4 +63,6 @@ export default function WordsPage() {
       />
     </div>
   );
-}
+};
+
+export default WordsPage;

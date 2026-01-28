@@ -3,7 +3,7 @@ import LandingPage from "./pages/LandingPage";
 import ModulesPage from "./pages/ModulesPage";
 import WordsPage from "./pages/WordsPage";
 
-function App() {
+const App = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Routes>
@@ -14,6 +14,6 @@ function App() {
       </Routes>
     </div>
   );
-}
+};
 
 export default App;

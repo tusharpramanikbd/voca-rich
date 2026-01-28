@@ -1,14 +1,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, memo, useEffect } from "react";
 
-interface WordSheetProps {
+type TWordBottomSheet = {
   isOpen: boolean;
   onClose: () => void;
   onSave: (word: string, meaning: string) => Promise<void>;
   mode: "add" | "edit";
   initialWord?: string;
   initialMeaning?: string;
-}
+};
 
 const WordBottomSheet = ({
   isOpen,
@@ -17,7 +17,7 @@ const WordBottomSheet = ({
   mode,
   initialWord = "",
   initialMeaning = "",
-}: WordSheetProps) => {
+}: TWordBottomSheet) => {
   const [word, setWord] = useState("");
   const [meaning, setMeaning] = useState("");
   const [saving, setSaving] = useState(false);

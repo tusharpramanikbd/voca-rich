@@ -1,20 +1,20 @@
 import { Dexie, type EntityTable } from "dexie";
 
-interface Module {
+type Module = {
   id: string;
   name: string;
   createdAt: number;
   updatedAt: number;
-}
+};
 
-interface Word {
+type Word = {
   id: string;
   moduleId: string;
   word: string;
   meaning: string;
   createdAt: number;
   updatedAt: number;
-}
+};
 
 const db = new Dexie("VocaRich") as Dexie & {
   modules: EntityTable<Module, "id">;
