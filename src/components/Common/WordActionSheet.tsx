@@ -28,7 +28,7 @@ export const WordActionsSheet = ({
           onClick={onClose}
         />
         <motion.div
-          className="bg-white/95 backdrop-blur-md rounded-t-3xl shadow-2xl border-t border-gray-100 w-full max-h-[35vh]"
+          className="bg-white/95 backdrop-blur-md rounded-t-3xl shadow-2xl border-t border-gray-100 w-full max-h-[40vh]"
           initial={{ scaleY: 0.95 }}
           animate={{ scaleY: 1 }}
         >
