@@ -28,7 +28,7 @@ export const WordActionsSheet = ({
           onClick={onClose}
         />
         <motion.div
-          className="bg-white/95 backdrop-blur-md rounded-t-3xl shadow-2xl border-t border-gray-100 w-full max-h-[40vh]"
+          className="bg-white/95 backdrop-blur-md rounded-t-3xl shadow-2xl border-t border-gray-100 w-full"
           initial={{ scaleY: 0.95 }}
           animate={{ scaleY: 1 }}
         >
@@ -36,7 +36,7 @@ export const WordActionsSheet = ({
             <div className="w-8 h-1.5 bg-gray-300 rounded-full" />
           </div>
 
-          <div className="px-6 pb-6">
+          <div className="px-6 pb-8">
             <button
               onClick={onEdit}
               className="w-full py-4 px-2 text-lg font-semibold text-gray-900 flex items-center gap-3"
