@@ -6,14 +6,14 @@ type TWordList = {
   words: Word[];
   setEditingWord: React.Dispatch<React.SetStateAction<Word | null>>;
   setIsEditSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleDeleteWord: (id: string) => Promise<void>;
+  onAskDelete: (id: string) => void;
 };
 
 const WordList = ({
   words,
   setEditingWord,
   setIsEditSheetOpen,
-  handleDeleteWord,
+  onAskDelete,
 }: TWordList) => {
   return (
     <div className="px-6 space-y-4 pb-24">
@@ -23,7 +23,7 @@ const WordList = ({
           word={word}
           setEditingWord={setEditingWord}
           setIsEditSheetOpen={setIsEditSheetOpen}
-          handleDeleteWord={handleDeleteWord}
+          onAskDelete={onAskDelete}
         />
       ))}
 

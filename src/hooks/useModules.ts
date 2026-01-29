@@ -5,6 +5,8 @@ import { createModule, deleteModuleCascade } from "../db/crudModules";
 
 const useModules = () => {
   const [newModuleName, setNewModuleName] = useState("");
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleteSheetOpen, setIsDeleteSheetOpen] = useState(false);
 
   const modules = useLiveQuery(
     () => db.modules.orderBy("updatedAt").reverse().toArray(),
@@ -12,24 +14,35 @@ const useModules = () => {
     [],
   ) as Module[];
 
-  async function handleCreateModule() {
+  const handleCreateModule = async () => {
     const name = newModuleName.trim();
     if (!name) return;
     await createModule(name);
     setNewModuleName("");
-  }
+  };
 
-  async function handleDeleteModule(moduleId: string) {
-    if (!confirm("Delete this module and all words?")) return;
-    await deleteModuleCascade(moduleId);
-  }
+  const requestDelete = (id: string) => {
+    setDeleteId(id);
+    setIsDeleteSheetOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+    await deleteModuleCascade(deleteId);
+    setIsDeleteSheetOpen(false);
+    setDeleteId(null);
+  };
 
   return {
     newModuleName,
     setNewModuleName,
     modules,
     handleCreateModule,
-    handleDeleteModule,
+    requestDelete,
+    confirmDelete,
+    isDeleteSheetOpen,
+    setIsDeleteSheetOpen,
+    setDeleteId,
   };
 };
 export default useModules;

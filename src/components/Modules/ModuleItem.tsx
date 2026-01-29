@@ -4,10 +4,10 @@ import { memo } from "react";
 
 type TModuleItem = {
   module: Module;
-  handleDeleteModule: (moduleId: string) => void;
+  onAskDelete: (id: string) => void;
 };
 
-const ModuleItem = ({ module, handleDeleteModule }: TModuleItem) => {
+const ModuleItem = ({ module, onAskDelete }: TModuleItem) => {
   return (
     <Link
       to={`/app/m/${module?.id}+${module?.name}`}
@@ -26,7 +26,7 @@ const ModuleItem = ({ module, handleDeleteModule }: TModuleItem) => {
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            handleDeleteModule?.(module?.id);
+            onAskDelete?.(module?.id);
           }}
           className="text-red-500 hover:text-red-600 p-2 -m-2 rounded-xl hover:bg-red-100 transition-colors"
         >

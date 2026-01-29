@@ -5,14 +5,14 @@ type TWordItem = {
   word: Word;
   setEditingWord: React.Dispatch<React.SetStateAction<Word | null>>;
   setIsEditSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleDeleteWord: (id: string) => Promise<void>;
+  onAskDelete: (id: string) => void;
 };
 
 const WordItem = ({
   word,
   setEditingWord,
   setIsEditSheetOpen,
-  handleDeleteWord,
+  onAskDelete,
 }: TWordItem) => {
   return (
     <div className="bg-white/70 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-white/50 group">
@@ -40,7 +40,7 @@ const WordItem = ({
             ✏️
           </button>
           <button
-            onClick={() => handleDeleteWord?.(word.id)}
+            onClick={() => onAskDelete(word.id)}
             className="p-3 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 transition-colors"
             title="Delete"
           >

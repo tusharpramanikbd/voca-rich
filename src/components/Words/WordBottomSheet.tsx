@@ -22,7 +22,7 @@ const WordBottomSheet = ({
   const [meaning, setMeaning] = useState("");
   const [saving, setSaving] = useState(false);
 
-  async function handleSave() {
+  const handleSave = async () => {
     const trimmedWord = word.trim();
     const trimmedMeaning = meaning.trim();
     if (!trimmedWord || !trimmedMeaning) return;
@@ -34,7 +34,7 @@ const WordBottomSheet = ({
     } finally {
       setSaving(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (isOpen && mode === "edit") {

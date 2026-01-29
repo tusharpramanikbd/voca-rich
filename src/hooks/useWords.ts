@@ -19,6 +19,8 @@ const useWords = () => {
   const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
   const [editingWord, setEditingWord] = useState<Word | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleteSheetOpen, setIsDeleteSheetOpen] = useState(false);
 
   // Live words (filtered by search)
   const words = useLiveQuery(
@@ -41,7 +43,7 @@ const useWords = () => {
     return await countWordsByModule(moduleId);
   }, [moduleId]);
 
-  async function handleSaveWord(word: string, meaning: string) {
+  const handleSaveWord = async (word: string, meaning: string) => {
     if (isAddSheetOpen) {
       if (!moduleId) return;
       await createWord(moduleId, word, meaning);
@@ -49,12 +51,19 @@ const useWords = () => {
     }
     if (!editingWord?.id) return;
     await updateWord(editingWord.id, { word, meaning });
-  }
+  };
 
-  async function handleDeleteWord(id: string) {
-    if (!confirm("Delete this word?")) return;
-    await deleteWord(id);
-  }
+  const requestDelete = (id: string) => {
+    setDeleteId(id);
+    setIsDeleteSheetOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+    await deleteWord(deleteId); // your existing delete function
+    setIsDeleteSheetOpen(false);
+    setDeleteId(null);
+  };
 
   return {
     moduleId,
@@ -70,7 +79,11 @@ const useWords = () => {
     setIsEditSheetOpen,
     setEditingWord,
     handleSaveWord,
-    handleDeleteWord,
+    requestDelete,
+    confirmDelete,
+    isDeleteSheetOpen,
+    setIsDeleteSheetOpen,
+    setDeleteId,
   };
 };
 

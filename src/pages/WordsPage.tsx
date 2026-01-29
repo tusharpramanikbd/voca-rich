@@ -4,6 +4,7 @@ import WordSearch from "../components/Words/WordSearch";
 import WordList from "../components/Words/WordList";
 import AddWordFAB from "../components/Words/AddWordFAB";
 import useWords from "../hooks/useWords";
+import ConfirmBottomSheet from "../components/Common/ConfirmBottomSheet";
 
 const WordsPage = () => {
   const {
@@ -20,7 +21,11 @@ const WordsPage = () => {
     editingWord,
     setEditingWord,
     handleSaveWord,
-    handleDeleteWord,
+    requestDelete,
+    confirmDelete,
+    isDeleteSheetOpen,
+    setIsDeleteSheetOpen,
+    setDeleteId,
   } = useWords();
 
   if (!moduleId) return <div>Invalid module</div>;
@@ -43,7 +48,7 @@ const WordsPage = () => {
         words={words}
         setEditingWord={setEditingWord}
         setIsEditSheetOpen={setIsEditSheetOpen}
-        handleDeleteWord={handleDeleteWord}
+        onAskDelete={requestDelete}
       />
 
       {/* FAB */}
@@ -60,6 +65,19 @@ const WordsPage = () => {
         mode={isAddSheetOpen ? "add" : "edit"}
         initialWord={editingWord?.word}
         initialMeaning={editingWord?.meaning}
+      />
+
+      {/* Delete Confirmation Bottom Sheet */}
+      <ConfirmBottomSheet
+        isOpen={isDeleteSheetOpen}
+        onCancel={() => {
+          setIsDeleteSheetOpen(false);
+          setDeleteId(null);
+        }}
+        onConfirm={confirmDelete}
+        title="Delete this word?"
+        message="This will permanently remove the word from this module."
+        confirmLabel="Delete"
       />
     </div>
   );
