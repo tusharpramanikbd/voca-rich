@@ -27,11 +27,7 @@ export const WordActionsSheet = ({
           className="flex-1 bg-black/20 backdrop-blur-sm"
           onClick={onClose}
         />
-        <motion.div
-          className="bg-white/95 backdrop-blur-md rounded-t-3xl shadow-2xl border-t border-gray-100 w-full"
-          initial={{ scaleY: 0.95 }}
-          animate={{ scaleY: 1 }}
-        >
+        <div className="bg-white/95 backdrop-blur-md rounded-t-3xl shadow-2xl border-t border-gray-100 max-h-[40vh]">
           <div className="pt-4 pb-2 px-6 flex justify-center">
             <div className="w-8 h-1.5 bg-gray-300 rounded-full" />
           </div>
@@ -51,7 +47,7 @@ export const WordActionsSheet = ({
               <TrashIcon className="w-6 h-6" /> Delete
             </button>
           </div>
-        </motion.div>
+        </div>
       </motion.div>
     )}
   </AnimatePresence>
