@@ -29,6 +29,7 @@ const ModulesPage = () => {
         title="Modules"
         unit={modules?.length > 1 ? "modules" : "module"}
         itemCount={modules?.length ?? 0}
+        classes="pt-12"
       />
 
       <AddModule
