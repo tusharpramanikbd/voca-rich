@@ -24,26 +24,30 @@ const ModulesPage = () => {
   } = useModules();
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-teal-50 to-white">
-      <Header
-        title="Modules"
-        unit={modules?.length > 1 ? "modules" : "module"}
-        itemCount={modules?.length ?? 0}
-        classes="pt-12"
-      />
+    <div className="h-dvh flex flex-col bg-linear-to-b from-teal-50 to-white">
+      <div className="flex-0">
+        <Header
+          title="Modules"
+          unit={modules?.length > 1 ? "modules" : "module"}
+          itemCount={modules?.length ?? 0}
+          classes="pt-12"
+        />
 
-      <AddModule
-        newModuleName={newModuleName}
-        setNewModuleName={setNewModuleName}
-        handleCreateModule={handleCreateModule}
-      />
+        <AddModule
+          newModuleName={newModuleName}
+          setNewModuleName={setNewModuleName}
+          handleCreateModule={handleCreateModule}
+        />
+      </div>
 
-      <ModuleList
-        modules={modules}
-        setEditingWord={setEditingWord}
-        setIsEditSheetOpen={setIsEditSheetOpen}
-        onAskDelete={requestDelete}
-      />
+      <div className="flex-1 overflow-y-auto pb-16">
+        <ModuleList
+          modules={modules}
+          setEditingWord={setEditingWord}
+          setIsEditSheetOpen={setIsEditSheetOpen}
+          onAskDelete={requestDelete}
+        />
+      </div>
 
       {/* Edit Bottom Sheet */}
       <ModuleBottomSheet

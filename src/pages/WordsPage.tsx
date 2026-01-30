@@ -31,27 +31,26 @@ const WordsPage = () => {
   if (!moduleId) return <div>Invalid module</div>;
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-teal-50 to-white">
-      {/* Header */}
-      <Header
-        title={moduleName || "Module"}
-        unit={wordCount > 1 ? "words" : "word"}
-        itemCount={wordCount ?? 0}
-        canGoBack={true}
-      />
+    <div className="h-dvh flex flex-col bg-linear-to-b from-teal-50 to-white">
+      <div className="flex-0">
+        <Header
+          title={moduleName || "Module"}
+          unit={wordCount > 1 ? "words" : "word"}
+          itemCount={wordCount ?? 0}
+          canGoBack={true}
+        />
+        <WordSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      </div>
 
-      {/* Search */}
-      <WordSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <div className="flex-1 overflow-y-auto pb-16">
+        <WordList
+          words={words}
+          setEditingWord={setEditingWord}
+          setIsEditSheetOpen={setIsEditSheetOpen}
+          onAskDelete={requestDelete}
+        />
+      </div>
 
-      {/* Words List */}
-      <WordList
-        words={words}
-        setEditingWord={setEditingWord}
-        setIsEditSheetOpen={setIsEditSheetOpen}
-        onAskDelete={requestDelete}
-      />
-
-      {/* FAB */}
       <AddWordFAB setIsAddSheetOpen={setIsAddSheetOpen} />
 
       {/* Add/Edit Bottom Sheet */}
