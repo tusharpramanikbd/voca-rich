@@ -14,7 +14,7 @@ const BaseBottomSheet = ({ isOpen, onClose, children }: TBaseBottomSheet) => (
         animate={{ y: 0 }}
         exit={{ y: "100%" }}
         transition={{ type: "spring", damping: 40, stiffness: 300 }}
-        className="fixed inset-0 z-50 flex flex-col"
+        className="fixed inset-0 z-50 flex flex-col h-full"
       >
         <div
           className="flex-1 bg-black/20 backdrop-blur-sm"
