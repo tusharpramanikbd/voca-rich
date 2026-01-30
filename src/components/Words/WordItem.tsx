@@ -1,7 +1,7 @@
 import type { Word } from "../../db/vocarichDb";
 import { memo, useState } from "react";
-import { WordActionsSheet } from "../Common/WordActionSheet";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import ActionsBottomSheet from "../Common/BottomSheet/ActionsBottomSheet";
 
 type TWordItem = {
   word: Word;
@@ -36,7 +36,7 @@ const WordItem = ({
         </button>
       </div>
 
-      <WordActionsSheet
+      <ActionsBottomSheet
         isOpen={showMenu}
         onClose={() => setShowMenu(false)}
         onEdit={() => {

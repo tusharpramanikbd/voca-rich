@@ -2,7 +2,7 @@ import useModules from "../hooks/useModules.js";
 import Header from "../components/Common/Header.js";
 import AddModule from "../components/Modules/AddModule.js";
 import ModuleList from "../components/Modules/ModuleList.js";
-import ConfirmBottomSheet from "../components/Common/ConfirmBottomSheet.js";
+import ConfirmBottomSheet from "../components/Common/BottomSheet/ConfirmBottomSheet.js";
 
 const ModulesPage = () => {
   const {

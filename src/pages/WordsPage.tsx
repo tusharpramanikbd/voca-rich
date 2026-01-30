@@ -4,7 +4,7 @@ import WordSearch from "../components/Words/WordSearch";
 import WordList from "../components/Words/WordList";
 import AddWordFAB from "../components/Words/AddWordFAB";
 import useWords from "../hooks/useWords";
-import ConfirmBottomSheet from "../components/Common/ConfirmBottomSheet";
+import ConfirmBottomSheet from "../components/Common/BottomSheet/ConfirmBottomSheet";
 
 const WordsPage = () => {
   const {
