@@ -12,7 +12,7 @@ type THeader = {
 const Header = ({ title, unit, itemCount, canGoBack, classes }: THeader) => {
   return (
     <div
-      className={`bg-linear-to-r from-teal-500 to-blue-600 px-6 pt-6 pb-6 rounded-b-3xl mx-4 shadow-2xl flex flex-col items-start gap-6 ${classes || ""}`}
+      className={`bg-linear-to-r from-teal-500 to-blue-600 px-6 pt-6 pb-6 rounded-3xl mx-4 mt-1 shadow-2xl flex flex-col items-start gap-6 ${classes || ""}`}
     >
       {canGoBack && (
         <Link to="/app" className="inline-flex items-center text-white/90">
