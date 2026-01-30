@@ -20,7 +20,7 @@ const BaseBottomSheet = ({ isOpen, onClose, children }: TBaseBottomSheet) => (
           className="flex-1 bg-black/20 backdrop-blur-sm"
           onClick={onClose}
         />
-        <div className="bg-white/95 backdrop-blur-md rounded-t-3xl shadow-2xl border-t border-gray-100 max-h-[50vh]">
+        <div className="bg-white/95 backdrop-blur-md rounded-t-3xl shadow-2xl border-t border-gray-100">
           <div className="pt-4 pb-2 px-6 flex justify-center">
             <div className="w-8 h-1.5 bg-gray-300 rounded-full" />
           </div>

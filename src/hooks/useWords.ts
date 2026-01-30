@@ -38,10 +38,11 @@ const useWords = () => {
   ) as Word[];
 
   // Live word count
-  const wordCount = useLiveQuery(async () => {
-    if (!moduleId) return 0;
-    return await countWordsByModule(moduleId);
-  }, [moduleId]);
+  const wordCount =
+    useLiveQuery(async () => {
+      if (!moduleId) return 0;
+      return await countWordsByModule(moduleId);
+    }, [moduleId]) ?? 0;
 
   const handleSaveWord = async (word: string, meaning: string) => {
     if (isAddSheetOpen) {

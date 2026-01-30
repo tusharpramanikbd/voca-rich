@@ -35,7 +35,7 @@ const WordsPage = () => {
       {/* Header */}
       <Header
         title={moduleName || "Module"}
-        unit="words"
+        unit={wordCount > 1 ? "words" : "word"}
         itemCount={wordCount ?? 0}
         canGoBack={true}
       />
