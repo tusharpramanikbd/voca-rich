@@ -12,13 +12,13 @@ const useModules = () => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isDeleteSheetOpen, setIsDeleteSheetOpen] = useState(false);
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
-  const [editingWord, setEditingWord] = useState<Module | null>(null);
+  const [editingModule, setEditingModule] = useState<Module | null>(null);
 
   const modules = useLiveQuery(
     () => db.modules.orderBy("updatedAt").reverse().toArray(),
     [],
-    [],
-  ) as Module[];
+    undefined,
+  ) as Module[] | undefined;
 
   const handleCreateModule = async () => {
     const name = newModuleName.trim();
@@ -28,8 +28,8 @@ const useModules = () => {
   };
 
   const handleRenameModule = async (title: string) => {
-    if (!editingWord?.id) return;
-    await renameModule(editingWord.id, title);
+    if (!editingModule?.id) return;
+    await renameModule(editingModule.id, title);
   };
 
   const requestDelete = (id: string) => {
@@ -54,10 +54,10 @@ const useModules = () => {
     isDeleteSheetOpen,
     setIsDeleteSheetOpen,
     setDeleteId,
-    setEditingWord,
+    setEditingModule,
     setIsEditSheetOpen,
     isEditSheetOpen,
-    editingWord,
+    editingModule,
     handleRenameModule,
   };
 };

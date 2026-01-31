@@ -4,7 +4,7 @@ import EmptyState from "../Common/EmptyState";
 import WordItem from "./WordItem";
 
 type TWordList = {
-  words: Word[];
+  words: Word[] | undefined;
   setEditingWord: React.Dispatch<React.SetStateAction<Word | null>>;
   setIsEditSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onAskDelete: (id: string) => void;

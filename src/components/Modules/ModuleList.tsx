@@ -4,15 +4,15 @@ import EmptyState from "../Common/EmptyState";
 import ModuleItem from "./ModuleItem";
 
 type TModuleList = {
-  modules: Module[];
-  setEditingWord: React.Dispatch<React.SetStateAction<Module | null>>;
+  modules: Module[] | undefined;
+  setEditingModule: React.Dispatch<React.SetStateAction<Module | null>>;
   setIsEditSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onAskDelete: (id: string) => void;
 };
 
 const ModuleList = ({
   modules,
-  setEditingWord,
+  setEditingModule,
   setIsEditSheetOpen,
   onAskDelete,
 }: TModuleList) => {
@@ -24,7 +24,7 @@ const ModuleList = ({
         <ModuleItem
           key={module.id}
           module={module}
-          setEditingWord={setEditingWord}
+          setEditingModule={setEditingModule}
           setIsEditSheetOpen={setIsEditSheetOpen}
           onAskDelete={onAskDelete}
         />

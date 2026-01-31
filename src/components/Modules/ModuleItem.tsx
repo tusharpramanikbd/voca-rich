@@ -8,14 +8,14 @@ import ActionsBottomSheet from "../Common/BottomSheet/ActionsBottomSheet";
 
 type TModuleItem = {
   module: Module;
-  setEditingWord: React.Dispatch<React.SetStateAction<Module | null>>;
+  setEditingModule: React.Dispatch<React.SetStateAction<Module | null>>;
   setIsEditSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onAskDelete: (id: string) => void;
 };
 
 const ModuleItem = ({
   module,
-  setEditingWord,
+  setEditingModule,
   setIsEditSheetOpen,
   onAskDelete,
 }: TModuleItem) => {
@@ -59,7 +59,7 @@ const ModuleItem = ({
         isOpen={showMenu}
         onClose={() => setShowMenu(false)}
         onEdit={() => {
-          setEditingWord(module);
+          setEditingModule(module);
           setIsEditSheetOpen(true);
           setShowMenu(false);
         }}

@@ -1,7 +1,8 @@
 import { type ReactNode } from "react";
+import LoadingSkeleton from "./LoadingSkeleton";
 
 type TBaseList<T> = {
-  items: T[];
+  items: T[] | undefined;
   renderEmpty: ReactNode;
   renderItem: (item: T, index: number) => ReactNode;
   className?: string;
@@ -15,9 +16,13 @@ const BaseList = <T,>({
   className = "",
   bottomPadding = 4,
 }: TBaseList<T>) => {
+  if (items === undefined) {
+    return <LoadingSkeleton className={className} />;
+  }
+
   return (
     <div className={`flex-1 overflow-hidden ${className}`}>
-      {items.length === 0 ? (
+      {items?.length === 0 ? (
         <div className="h-full flex items-center justify-center px-6">
           {renderEmpty}
         </div>
@@ -26,7 +31,7 @@ const BaseList = <T,>({
           className="h-full overflow-y-auto px-6 space-y-4"
           style={{ paddingBottom: `${bottomPadding}rem` }}
         >
-          {items.map((item, index) => renderItem(item, index))}
+          {items?.map((item, index) => renderItem(item, index))}
         </div>
       )}
     </div>

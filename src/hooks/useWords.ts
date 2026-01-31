@@ -34,8 +34,8 @@ const useWords = () => {
       );
     },
     [moduleId, searchTerm],
-    [],
-  ) as Word[];
+    undefined,
+  ) as Word[] | undefined;
 
   // Live word count
   const wordCount =

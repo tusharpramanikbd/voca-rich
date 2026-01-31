@@ -16,10 +16,10 @@ const ModulesPage = () => {
     isDeleteSheetOpen,
     setIsDeleteSheetOpen,
     setDeleteId,
-    setEditingWord,
+    setEditingModule,
     setIsEditSheetOpen,
     isEditSheetOpen,
-    editingWord,
+    editingModule,
     handleRenameModule,
   } = useModules();
 
@@ -28,7 +28,7 @@ const ModulesPage = () => {
       <div className="flex-0">
         <Header
           title="Modules"
-          unit={modules?.length > 1 ? "modules" : "module"}
+          unit={modules && modules?.length > 1 ? "modules" : "module"}
           itemCount={modules?.length ?? 0}
           classes="pt-12"
         />
@@ -42,7 +42,7 @@ const ModulesPage = () => {
 
       <ModuleList
         modules={modules}
-        setEditingWord={setEditingWord}
+        setEditingModule={setEditingModule}
         setIsEditSheetOpen={setIsEditSheetOpen}
         onAskDelete={requestDelete}
       />
@@ -54,7 +54,7 @@ const ModulesPage = () => {
           setIsEditSheetOpen(false);
         }}
         onSave={handleRenameModule}
-        initialWord={editingWord?.name || ""}
+        initialWord={editingModule?.name || ""}
       />
 
       {/* Delete Confirmation Bottom Sheet */}
