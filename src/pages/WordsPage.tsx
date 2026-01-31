@@ -42,14 +42,12 @@ const WordsPage = () => {
         <WordSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
 
-      <div className="flex-1 overflow-y-auto pb-16">
-        <WordList
-          words={words}
-          setEditingWord={setEditingWord}
-          setIsEditSheetOpen={setIsEditSheetOpen}
-          onAskDelete={requestDelete}
-        />
-      </div>
+      <WordList
+        words={words}
+        setEditingWord={setEditingWord}
+        setIsEditSheetOpen={setIsEditSheetOpen}
+        onAskDelete={requestDelete}
+      />
 
       <AddWordFAB setIsAddSheetOpen={setIsAddSheetOpen} />
 

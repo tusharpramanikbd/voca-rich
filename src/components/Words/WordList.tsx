@@ -1,4 +1,5 @@
 import type { Word } from "../../db/vocarichDb";
+import BaseList from "../Common/BaseList";
 import EmptyState from "../Common/EmptyState";
 import WordItem from "./WordItem";
 
@@ -16,8 +17,10 @@ const WordList = ({
   onAskDelete,
 }: TWordList) => {
   return (
-    <div className="px-6 space-y-4 pb-24">
-      {(words ?? []).map((word) => (
+    <BaseList
+      items={words}
+      renderEmpty={<EmptyState emptyType="word" />}
+      renderItem={(word) => (
         <WordItem
           key={word.id}
           word={word}
@@ -25,10 +28,8 @@ const WordList = ({
           setIsEditSheetOpen={setIsEditSheetOpen}
           onAskDelete={onAskDelete}
         />
-      ))}
-
-      {words && words.length === 0 && <EmptyState emptyType="word" />}
-    </div>
+      )}
+    />
   );
 };
 

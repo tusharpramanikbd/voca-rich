@@ -6,7 +6,7 @@ type TAddWordFAB = {
 
 const AddWordFAB = ({ setIsAddSheetOpen }: TAddWordFAB) => {
   return (
-    <div className="fixed bottom-16 right-6 z-40">
+    <div className="fixed bottom-6 right-6 z-40">
       <motion.button
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsAddSheetOpen(true)}

@@ -1,4 +1,5 @@
 import type { Module } from "../../db/vocarichDb";
+import BaseList from "../Common/BaseList";
 import EmptyState from "../Common/EmptyState";
 import ModuleItem from "./ModuleItem";
 
@@ -16,19 +17,19 @@ const ModuleList = ({
   onAskDelete,
 }: TModuleList) => {
   return (
-    <div className="px-6 space-y-4 pb-24">
-      {(modules ?? []).map((module) => (
+    <BaseList
+      items={modules}
+      renderEmpty={<EmptyState emptyType="module" />}
+      renderItem={(module) => (
         <ModuleItem
-          key={module?.id}
+          key={module.id}
           module={module}
           setEditingWord={setEditingWord}
           setIsEditSheetOpen={setIsEditSheetOpen}
           onAskDelete={onAskDelete}
         />
-      ))}
-
-      {modules && modules.length === 0 && <EmptyState emptyType="module" />}
-    </div>
+      )}
+    />
   );
 };
 

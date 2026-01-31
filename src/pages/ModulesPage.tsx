@@ -40,14 +40,12 @@ const ModulesPage = () => {
         />
       </div>
 
-      <div className="flex-1 overflow-y-auto pb-16">
-        <ModuleList
-          modules={modules}
-          setEditingWord={setEditingWord}
-          setIsEditSheetOpen={setIsEditSheetOpen}
-          onAskDelete={requestDelete}
-        />
-      </div>
+      <ModuleList
+        modules={modules}
+        setEditingWord={setEditingWord}
+        setIsEditSheetOpen={setIsEditSheetOpen}
+        onAskDelete={requestDelete}
+      />
 
       {/* Edit Bottom Sheet */}
       <ModuleBottomSheet
