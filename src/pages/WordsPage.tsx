@@ -44,6 +44,7 @@ const WordsPage = () => {
 
       <WordList
         words={words}
+        serachTerm={searchTerm}
         setEditingWord={setEditingWord}
         setIsEditSheetOpen={setIsEditSheetOpen}
         onAskDelete={requestDelete}
