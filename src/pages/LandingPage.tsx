@@ -1,17 +1,19 @@
+import Hero from "../components/Landing/Hero";
+import Features from "../components/Landing/Features";
+import QRCode from "../components/Landing/QRCode";
+import InstallInstruction from "../components/Landing/InstallInstruction";
+
 const LandingPage = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-teal-500 to-blue-600 text-white p-8">
-      <h1 className="text-5xl font-bold mb-6 text-center">VocaRich</h1>
-      <p className="text-xl mb-8 max-w-md text-center">
-        Your offline vocabulary notebook with daily practice
-      </p>
-      <div className="space-x-4">
-        <a
-          href="/app"
-          className="bg-white text-teal-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
-        >
-          Open on Mobile
-        </a>
+    <div className="min-h-dvh bg-linear-to-br from-teal-500 via-blue-500 to-purple-600 text-white p-8 lg:p-12">
+      <div className="max-w-4xl mx-auto mb-16">
+        <Hero />
+        <Features />
+      </div>
+
+      <div className="max-w-4xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+        <QRCode />
+        <InstallInstruction />
       </div>
     </div>
   );

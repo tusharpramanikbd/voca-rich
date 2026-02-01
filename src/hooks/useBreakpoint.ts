@@ -18,7 +18,7 @@ export const useBreakpoint = () => {
       const width = window.innerWidth;
       let found: keyof typeof DEFAULT_BREAKPOINTS = "xs";
 
-      // Check CSS vars first (Tailwind v4)
+      // Check CSS vars first
       const root = getComputedStyle(document.documentElement);
       for (const key of Object.keys(
         DEFAULT_BREAKPOINTS,
