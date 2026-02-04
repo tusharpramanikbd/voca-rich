@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useLocation } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import LandingPage from "./pages/LandingPage";
 import ModulesPage from "./pages/ModulesPage";
 import WordsPage from "./pages/WordsPage";
@@ -12,36 +12,34 @@ const App = () => {
   const { shouldShowGate } = useMobileOnlyGate();
   const isPWA = useIsPWA();
   const [showSplash, setShowSplash] = useState(isPWA);
-  const location = useLocation();
 
   const handleSplashComplete = () => setShowSplash(false);
 
-  // PWA always goes to /app (skip landing)
-  const redirectToApp = isPWA || location.pathname === "/";
-
   return (
     <>
-      {/* Splash Screen (PWA + first load) */}
+      {/* Splash Screen ONLY for PWA */}
       {showSplash && <SplashPage onComplete={handleSplashComplete} />}
 
+      {/* Main App (ALWAYS renders after splash) */}
       {!showSplash && (
-        <div className={`min-h-screen ${redirectToApp ? "bg-gray-50" : ""}`}>
+        <div className="min-h-screen bg-gray-50">
           <Routes>
-            {/* PWA: Always app routes */}
+            {/* PWA: Force /app ALWAYS */}
             {isPWA ? (
               <>
                 <Route path="/" element={<Navigate to="/app" replace />} />
                 <Route path="/app" element={<ModulesPage />} />
                 <Route path="/app/m/:module" element={<WordsPage />} />
+                {/* PWA catch-all → /app */}
                 <Route path="*" element={<Navigate to="/app" replace />} />
               </>
             ) : (
-              // Browser: Landing + app
+              // Desktop Browser: Normal flow
               <>
-                <Route path="/" element={<LandingPage />} />
+                <Route index element={<LandingPage />} />
                 <Route path="/app" element={<ModulesPage />} />
                 <Route path="/app/m/:module" element={<WordsPage />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="*" element={<LandingPage />} />
               </>
             )}
           </Routes>
