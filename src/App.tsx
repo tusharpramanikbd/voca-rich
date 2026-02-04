@@ -14,7 +14,7 @@ const App = () => {
     <div className="min-h-screen bg-gray-50">
       <Routes>
         {/* PWA: Hide landing, force /app */}
-        {isPWA ? (
+        {!isPWA ? (
           <>
             <Route path="/" element={<Navigate to="/app" replace />} />
             <Route path="/app/*" element={<AppLayout />} />
