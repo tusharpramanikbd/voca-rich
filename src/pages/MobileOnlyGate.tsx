@@ -19,7 +19,7 @@ const MobileOnlyGate = () => {
         </div>
 
         <h2 className="text-2xl font-bold text-gray-900 mb-4">
-          VocaRich is mobile-first
+          VocaRich is mobile-only
         </h2>
 
         <p className="text-lg text-gray-600 mb-6 leading-relaxed">

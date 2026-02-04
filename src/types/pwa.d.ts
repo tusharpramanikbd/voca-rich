@@ -11,4 +11,14 @@ declare global {
   interface WindowEventMap {
     beforeinstallprompt: BeforeInstallPromptEvent;
   }
+
+  interface Navigator {
+    standalone?: boolean;
+  }
+
+  interface Window {
+    matchMedia(query: string): MediaQueryList;
+  }
 }
+
+export {};
