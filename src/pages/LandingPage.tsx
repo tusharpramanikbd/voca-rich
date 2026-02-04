@@ -4,6 +4,7 @@ import QRCode from "../components/Landing/QRCode";
 import InstallInstruction from "../components/Landing/InstallInstruction";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 import InstallPrompt from "../components/Landing/InstallPrompt";
+import Copyright from "../components/Landing/Copyright";
 
 const LandingPage = () => {
   const { isDesktop } = useBreakpoint();
@@ -20,6 +21,7 @@ const LandingPage = () => {
 
         <InstallInstruction />
       </div>
+      <Copyright />
     </div>
   );
 };
