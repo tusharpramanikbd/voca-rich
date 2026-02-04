@@ -1,6 +1,6 @@
 const InstallInstruction = () => {
   return (
-    <div>
+    <div id="install">
       <h3 className="text-3xl font-bold mb-8 bg-linear-to-r from-white to-teal-100 bg-clip-text text-transparent">
         Install Guide
       </h3>
