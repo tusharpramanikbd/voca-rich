@@ -7,12 +7,12 @@ const AppLayout = () => {
   const isPWA = useIsPWA();
   const [showSplash, setShowSplash] = useState(isPWA);
 
-  // Auto-hide splash after 2s for PWA
+  // Auto-hide splash after 1s for PWA
   useEffect(() => {
     if (isPWA && showSplash) {
       const timer = setTimeout(() => {
         setShowSplash(false);
-      }, 2000);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [isPWA, showSplash]);
