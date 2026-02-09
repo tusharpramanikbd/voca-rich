@@ -4,8 +4,7 @@ import WordsPage from "./pages/WordsPage";
 import MobileOnlyGate from "./pages/MobileOnlyGate";
 import { useMobileOnlyGate } from "./hooks/useMobileOnlyGate";
 import useIsPWA from "./hooks/useIsPWA";
-// import AppLayout from "./pages/AppLayout";
-import ModulesPage from "./pages/ModulesPage";
+import AppLayout from "./pages/AppLayout";
 
 const App = () => {
   const { shouldShowGate } = useMobileOnlyGate();
@@ -17,7 +16,7 @@ const App = () => {
         {isPWA ? (
           <>
             <Route path="/" element={<Navigate to="/app" replace />} />
-            <Route path="/app/*" element={<ModulesPage />} />
+            <Route path="/app/*" element={<AppLayout />} />
             <Route path="/app/m/:module" element={<WordsPage />} />
             <Route path="*" element={<Navigate to="/app" replace />} />
           </>
@@ -25,7 +24,7 @@ const App = () => {
           // Browser: Normal landing + app
           <>
             <Route index element={<LandingPage />} />
-            <Route path="/app/*" element={<ModulesPage />} />
+            <Route path="/app/*" element={<AppLayout />} />
             <Route path="/app/m/:module" element={<WordsPage />} />
             <Route path="*" element={<LandingPage />} />
           </>
@@ -37,22 +36,5 @@ const App = () => {
     </div>
   );
 };
-
-// {!isPWA ? (
-//           <>
-//             <Route path="/" element={<Navigate to="/app" replace />} />
-//             <Route path="/app/*" element={<AppLayout />} />
-//             <Route path="/app/m/:module" element={<WordsPage />} />
-//             <Route path="*" element={<Navigate to="/app" replace />} />
-//           </>
-//         ) : (
-//           // Browser: Normal landing + app
-//           <>
-//             <Route index element={<LandingPage />} />
-//             <Route path="/app/*" element={<AppLayout />} />
-//             <Route path="/app/m/:module" element={<WordsPage />} />
-//             <Route path="*" element={<LandingPage />} />
-//           </>
-//         )}
 
 export default App;
