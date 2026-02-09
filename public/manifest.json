@@ -2,7 +2,7 @@
   "name": "VocaRich",
   "short_name": "VocaRich",
   "description": "Offline-first vocabulary notebook",
-  "start_url": "/app",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#14b8a6",
   "theme_color": "#14b8a6",

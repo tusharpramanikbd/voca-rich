@@ -32,7 +32,7 @@ const ModulesPage = () => {
         PWA Status: {isPWA ? "Yes" : "No"}
       </p>
       <p className="text-center text-sm text-gray-300 mb-4">
-        Testing Version: 3
+        Testing Version: 4
       </p>
       <div className="flex-0">
         <Header
