@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useIsPWA from "../hooks/useIsPWA";
 import SplashPage from "./SplashPage";
-import ModulesPage from "./ModulesPage"; // ← IMPORTED!
+import ModulesPage from "./ModulesPage";
 
 const AppLayout = () => {
   const isPWA = useIsPWA();
@@ -19,11 +19,11 @@ const AppLayout = () => {
 
   // PWA: Show splash first
   if (showSplash) {
-    return <SplashPage onComplete={() => setShowSplash(false)} />;
+    return <SplashPage />;
   }
 
   // Show ModulesPage after splash
-  return <ModulesPage />; // ← YOUR ModulesPage!
+  return <ModulesPage />;
 };
 
 export default AppLayout;

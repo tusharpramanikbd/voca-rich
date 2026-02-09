@@ -4,7 +4,6 @@ import AddModule from "../components/Modules/AddModule.js";
 import ModuleList from "../components/Modules/ModuleList.js";
 import ConfirmBottomSheet from "../components/Common/BottomSheet/ConfirmBottomSheet.js";
 import ModuleBottomSheet from "../components/Modules/ModuleBottomSheet.js";
-import useIsPWA from "../hooks/useIsPWA.js";
 
 const ModulesPage = () => {
   const {
@@ -24,16 +23,8 @@ const ModulesPage = () => {
     handleRenameModule,
   } = useModules();
 
-  const isPWA = useIsPWA();
-
   return (
     <div className="h-dvh flex flex-col bg-linear-to-b from-teal-50 to-white">
-      <p className="text-center text-sm text-gray-300 mb-4">
-        PWA Status: {isPWA ? "Yes" : "No"}
-      </p>
-      <p className="text-center text-sm text-gray-300 mb-4">
-        Testing Version: 6
-      </p>
       <div className="flex-0">
         <Header
           title="Modules"
