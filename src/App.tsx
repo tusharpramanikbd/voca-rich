@@ -4,7 +4,8 @@ import WordsPage from "./pages/WordsPage";
 import MobileOnlyGate from "./pages/MobileOnlyGate";
 import { useMobileOnlyGate } from "./hooks/useMobileOnlyGate";
 // import useIsPWA from "./hooks/useIsPWA";
-import AppLayout from "./pages/AppLayout";
+// import AppLayout from "./pages/AppLayout";
+import ModulesPage from "./pages/ModulesPage";
 
 const App = () => {
   const { shouldShowGate } = useMobileOnlyGate();
@@ -14,7 +15,7 @@ const App = () => {
     <div className="min-h-screen bg-gray-50">
       <Routes>
         <Route index element={<LandingPage />} />
-        <Route path="/app/*" element={<AppLayout />} />
+        <Route path="/app" element={<ModulesPage />} />
         <Route path="/app/m/:module" element={<WordsPage />} />
         <Route path="*" element={<LandingPage />} />
       </Routes>

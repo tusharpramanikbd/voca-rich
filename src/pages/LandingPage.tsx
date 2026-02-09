@@ -17,7 +17,7 @@ const LandingPage = () => {
         PWA Status: {isPWA ? "Yes" : "No"}
       </p>
       <p className="text-center text-sm text-gray-300 mb-4">
-        Testing Version: 2
+        Testing Version: 3
       </p>
       <div className="max-w-4xl mx-auto mb-16">
         <Hero />
