@@ -13,7 +13,7 @@ const BaseBottomSheet = ({ isOpen, onClose, children }: TBaseBottomSheet) => {
         <Sheet.Header />
         <Sheet.Content>{children}</Sheet.Content>
       </Sheet.Container>
-      <Sheet.Backdrop onClick={onClose} />
+      <Sheet.Backdrop />
     </Sheet>
   );
 };

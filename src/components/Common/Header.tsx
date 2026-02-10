@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 
 type THeader = {
@@ -10,14 +10,23 @@ type THeader = {
 };
 
 const Header = ({ title, unit, itemCount, canGoBack, classes }: THeader) => {
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div
       className={`bg-linear-to-r from-teal-500 to-blue-600 px-6 pt-6 pb-6 rounded-3xl mx-4 mt-1 shadow-2xl flex flex-col items-start gap-6 ${classes || ""}`}
     >
       {canGoBack && (
-        <Link to="/app" className="inline-flex items-center text-white/90">
+        <button
+          onClick={handleGoBack}
+          className="inline-flex items-center text-white/90"
+        >
           <ChevronLeftIcon className="w-6 h-6" />
-        </Link>
+        </button>
       )}
       <div>
         <h1 className="text-3xl font-bold text-white mb-2">{title}</h1>
