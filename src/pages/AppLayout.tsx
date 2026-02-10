@@ -3,6 +3,8 @@ import useIsPWA from "../hooks/useIsPWA";
 import SplashPage from "./SplashPage";
 import ModulesPage from "./ModulesPage";
 
+let hasShownSplash = false;
+
 const AppLayout = () => {
   const isPWA = useIsPWA();
   const [showSplash, setShowSplash] = useState(isPWA);
@@ -12,13 +14,14 @@ const AppLayout = () => {
     if (isPWA && showSplash) {
       const timer = setTimeout(() => {
         setShowSplash(false);
+        hasShownSplash = true;
       }, 2000);
       return () => clearTimeout(timer);
     }
   }, [isPWA, showSplash]);
 
   // PWA: Show splash first
-  if (showSplash) {
+  if (showSplash && !hasShownSplash) {
     return <SplashPage />;
   }
 
