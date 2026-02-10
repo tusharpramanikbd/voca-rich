@@ -12,7 +12,7 @@ const AppLayout = () => {
     if (isPWA && showSplash) {
       const timer = setTimeout(() => {
         setShowSplash(false);
-      }, 1000);
+      }, 2000);
       return () => clearTimeout(timer);
     }
   }, [isPWA, showSplash]);
