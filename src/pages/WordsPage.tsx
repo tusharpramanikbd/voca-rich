@@ -31,26 +31,29 @@ const WordsPage = () => {
   if (!moduleId) return <div>Invalid module</div>;
 
   return (
-    <div className="h-dvh flex flex-col bg-linear-to-b from-teal-50 to-white">
-      <div className="flex-0">
-        <Header
-          title={moduleName || "Module"}
-          unit={wordCount > 1 ? "words" : "word"}
-          itemCount={wordCount ?? 0}
-          canGoBack={true}
+    <>
+      <div className="h-dvh flex flex-col bg-linear-to-b from-teal-50 to-white">
+        <p>Testing: 1</p>
+        <div className="flex-0">
+          <Header
+            title={moduleName || "Module"}
+            unit={wordCount > 1 ? "words" : "word"}
+            itemCount={wordCount ?? 0}
+            canGoBack={true}
+          />
+          <WordSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        </div>
+
+        <WordList
+          words={words}
+          serachTerm={searchTerm}
+          setEditingWord={setEditingWord}
+          setIsEditSheetOpen={setIsEditSheetOpen}
+          onAskDelete={requestDelete}
         />
-        <WordSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+        <AddWordFAB setIsAddSheetOpen={setIsAddSheetOpen} />
       </div>
-
-      <WordList
-        words={words}
-        serachTerm={searchTerm}
-        setEditingWord={setEditingWord}
-        setIsEditSheetOpen={setIsEditSheetOpen}
-        onAskDelete={requestDelete}
-      />
-
-      <AddWordFAB setIsAddSheetOpen={setIsAddSheetOpen} />
 
       {/* Add/Edit Bottom Sheet */}
       <WordBottomSheet
@@ -77,7 +80,7 @@ const WordsPage = () => {
         message="This will permanently remove the word from this module."
         confirmLabel="Delete"
       />
-    </div>
+    </>
   );
 };
 

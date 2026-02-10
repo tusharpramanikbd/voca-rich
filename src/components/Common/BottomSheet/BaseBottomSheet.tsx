@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Sheet } from "react-modal-sheet";
 
 type TBaseBottomSheet = {
@@ -13,9 +14,9 @@ const BaseBottomSheet = ({ isOpen, onClose, children }: TBaseBottomSheet) => {
         <Sheet.Header />
         <Sheet.Content>{children}</Sheet.Content>
       </Sheet.Container>
-      <Sheet.Backdrop />
+      <Sheet.Backdrop onClick={onClose} />
     </Sheet>
   );
 };
 
-export default BaseBottomSheet;
+export default memo(BaseBottomSheet);
