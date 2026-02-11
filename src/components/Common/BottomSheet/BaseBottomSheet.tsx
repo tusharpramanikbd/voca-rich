@@ -12,7 +12,12 @@ const BaseBottomSheet = ({ isOpen, onClose, children }: TBaseBottomSheet) => {
     console.log("BaseBottomSheet", isOpen);
   });
   return (
-    <Sheet detent="content" isOpen={isOpen} onClose={onClose}>
+    <Sheet
+      detent="content"
+      disableScrollLocking={true}
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <Sheet.Container>
         <Sheet.Header />
         <Sheet.Content>{children}</Sheet.Content>
