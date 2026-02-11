@@ -33,7 +33,7 @@ const WordsPage = () => {
   return (
     <>
       <div className="h-dvh flex flex-col bg-linear-to-b from-teal-50 to-white">
-        <p>Testing: 2</p>
+        <p>Testing: 3</p>
         <div className="flex-0">
           <Header
             title={moduleName || "Module"}
@@ -66,6 +66,7 @@ const WordsPage = () => {
 
       {/* Edit Bottom Sheet */}
       <WordBottomSheet
+        key={editingWord?.id ?? "new"}
         isOpen={isEditSheetOpen}
         onClose={() => {
           setIsEditSheetOpen(false);

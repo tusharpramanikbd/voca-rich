@@ -1,4 +1,4 @@
-import { useState, memo, useEffect } from "react";
+import { useState, memo } from "react";
 import BaseBottomSheet from "../Common/BottomSheet/BaseBottomSheet";
 
 type TWordBottomSheet = {
@@ -18,9 +18,15 @@ const WordBottomSheet = ({
   initialWord = "",
   initialMeaning = "",
 }: TWordBottomSheet) => {
-  const [word, setWord] = useState("");
-  const [meaning, setMeaning] = useState("");
+  const [word, setWord] = useState(initialWord);
+  const [meaning, setMeaning] = useState(initialMeaning);
   const [saving, setSaving] = useState(false);
+
+  const handleClose = () => {
+    setWord(initialWord);
+    setMeaning(initialMeaning);
+    onClose();
+  };
 
   const handleSave = async () => {
     const trimmedWord = word.trim();
@@ -30,26 +36,14 @@ const WordBottomSheet = ({
     setSaving(true);
     try {
       await onSave(trimmedWord, trimmedMeaning);
-      onClose();
+      handleClose();
     } finally {
       setSaving(false);
     }
   };
 
-  useEffect(() => {
-    if (isOpen && mode === "edit") {
-      setWord(initialWord);
-      setMeaning(initialMeaning);
-    }
-
-    return () => {
-      setWord("");
-      setMeaning("");
-    };
-  }, [isOpen, initialWord, initialMeaning, mode]);
-
   return (
-    <BaseBottomSheet isOpen={isOpen} onClose={onClose}>
+    <BaseBottomSheet isOpen={isOpen} onClose={handleClose}>
       <div className="px-6 pb-8 space-y-4">
         <h3 className="text-2xl font-bold text-gray-900 text-center">
           {mode === "add" ? "Add New Word" : "Edit Word"}
@@ -62,7 +56,6 @@ const WordBottomSheet = ({
             placeholder="Word..."
             className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
             onKeyDown={(e) => e.key === "Enter" && handleSave()}
-            autoFocus
           />
           <input
             value={meaning}
