@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { Sheet } from "react-modal-sheet";
 
 type TBaseBottomSheet = {
@@ -8,6 +8,9 @@ type TBaseBottomSheet = {
 };
 
 const BaseBottomSheet = ({ isOpen, onClose, children }: TBaseBottomSheet) => {
+  useEffect(() => {
+    console.log("BaseBottomSheet", isOpen);
+  });
   return (
     <Sheet detent="content" isOpen={isOpen} onClose={onClose}>
       <Sheet.Container>

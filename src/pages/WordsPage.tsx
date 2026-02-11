@@ -33,7 +33,7 @@ const WordsPage = () => {
   return (
     <>
       <div className="h-dvh flex flex-col bg-linear-to-b from-teal-50 to-white">
-        <p>Testing: 1</p>
+        <p>Testing: 2</p>
         <div className="flex-0">
           <Header
             title={moduleName || "Module"}
@@ -55,15 +55,23 @@ const WordsPage = () => {
         <AddWordFAB setIsAddSheetOpen={setIsAddSheetOpen} />
       </div>
 
-      {/* Add/Edit Bottom Sheet */}
+      {/* Add Bottom Sheet */}
       <WordBottomSheet
-        isOpen={isAddSheetOpen || isEditSheetOpen}
+        isOpen={isAddSheetOpen}
         onClose={() => {
           setIsAddSheetOpen(false);
+        }}
+        onSave={handleSaveWord}
+      />
+
+      {/* Edit Bottom Sheet */}
+      <WordBottomSheet
+        isOpen={isEditSheetOpen}
+        onClose={() => {
           setIsEditSheetOpen(false);
         }}
         onSave={handleSaveWord}
-        mode={isAddSheetOpen ? "add" : "edit"}
+        mode="edit"
         initialWord={editingWord?.word}
         initialMeaning={editingWord?.meaning}
       />

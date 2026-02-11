@@ -5,7 +5,7 @@ type TWordBottomSheet = {
   isOpen: boolean;
   onClose: () => void;
   onSave: (word: string, meaning: string) => Promise<void>;
-  mode: "add" | "edit";
+  mode?: "add" | "edit";
   initialWord?: string;
   initialMeaning?: string;
 };
@@ -14,7 +14,7 @@ const WordBottomSheet = ({
   isOpen,
   onClose,
   onSave,
-  mode,
+  mode = "add",
   initialWord = "",
   initialMeaning = "",
 }: TWordBottomSheet) => {
