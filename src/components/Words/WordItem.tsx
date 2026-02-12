@@ -1,7 +1,6 @@
 import type { Word } from "../../db/vocarichDb";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
-import ActionsBottomSheet from "../Common/BottomSheet/ActionsBottomSheet";
 import { useWordsModal } from "../../providers/WordsModalProvider";
 
 type TWordItem = {
@@ -9,8 +8,7 @@ type TWordItem = {
 };
 
 const WordItem = ({ word }: TWordItem) => {
-  const { openEditWord, openDeleteWord } = useWordsModal();
-  const [showMenu, setShowMenu] = useState(false);
+  const { openActions } = useWordsModal();
 
   return (
     <>
@@ -25,23 +23,10 @@ const WordItem = ({ word }: TWordItem) => {
         </div>
 
         {/* Single 3-dots button */}
-        <button onClick={() => setShowMenu(true)}>
+        <button onClick={() => openActions(word)}>
           <EllipsisVerticalIcon className="w-6 h-6" />
         </button>
       </div>
-
-      <ActionsBottomSheet
-        isOpen={showMenu}
-        onClose={() => setShowMenu(false)}
-        onEdit={() => {
-          openEditWord(word);
-          setShowMenu(false);
-        }}
-        onDelete={() => {
-          openDeleteWord(word.id);
-          setShowMenu(false);
-        }}
-      />
     </>
   );
 };

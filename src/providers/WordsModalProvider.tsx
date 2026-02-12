@@ -4,11 +4,13 @@ import type { Word } from "../db/vocarichDb";
 import { createWord, deleteWord, updateWord } from "../db/crudWords";
 import WordBottomSheet from "../components/Words/WordBottomSheet";
 import ConfirmBottomSheet from "../components/Common/BottomSheet/ConfirmBottomSheet";
+import ActionsBottomSheet from "../components/Common/BottomSheet/ActionsBottomSheet";
 
 type ContextType = {
   openAddWord: () => void;
   openEditWord: (word: Word) => void;
   openDeleteWord: (id: string) => void;
+  openActions: (word: Word) => void;
 };
 
 const WordsModalContext = createContext<ContextType | null>(null);
@@ -32,6 +34,7 @@ export const WordsModalProvider = ({
   const [addOpen, setAddOpen] = useState(false);
   const [editingWord, setEditingWord] = useState<Word | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [actionWord, setActionWord] = useState<Word | null>(null);
 
   // ---------- actions ----------
 
@@ -40,6 +43,8 @@ export const WordsModalProvider = ({
   const openEditWord = (word: Word) => setEditingWord(word);
 
   const openDeleteWord = (id: string) => setDeleteId(id);
+
+  const openActions = (word: Word) => setActionWord(word);
 
   // ---------- save ----------
 
@@ -66,6 +71,7 @@ export const WordsModalProvider = ({
       openAddWord,
       openEditWord,
       openDeleteWord,
+      openActions,
     }),
     [],
   );
@@ -100,6 +106,22 @@ export const WordsModalProvider = ({
         onConfirm={handleDelete}
         title="Delete this word?"
         message="This will permanently remove the word from this module."
+      />
+
+      {/* ACTIONS */}
+      <ActionsBottomSheet
+        isOpen={!!actionWord}
+        onClose={() => setActionWord(null)}
+        onEdit={() => {
+          if (!actionWord) return;
+          openEditWord(actionWord);
+          setActionWord(null);
+        }}
+        onDelete={() => {
+          if (!actionWord) return;
+          openDeleteWord(actionWord.id);
+          setActionWord(null);
+        }}
       />
     </WordsModalContext.Provider>
   );
