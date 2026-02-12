@@ -77,7 +77,7 @@ const WordBottomSheet = ({
                   : "Save Changes"}
             </button>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               disabled={saving}
               className="px-8 bg-gray-200 text-gray-700 py-4 rounded-xl font-semibold hover:bg-gray-300 transition-colors disabled:opacity-50"
             >
