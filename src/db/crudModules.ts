@@ -29,3 +29,15 @@ export const deleteModuleCascade = async (moduleId: string): Promise<void> => {
 export const listModules = async (): Promise<Module[]> => {
   return await db.modules.toArray();
 };
+
+export async function getWordCountsByModule() {
+  const words = await db.words.toArray();
+
+  const counts: Record<string, number> = {};
+
+  for (const w of words) {
+    counts[w.moduleId] = (counts[w.moduleId] || 0) + 1;
+  }
+
+  return counts;
+}

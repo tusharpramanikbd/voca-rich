@@ -1,8 +1,6 @@
 import { Link } from "react-router";
 import type { Module } from "../../db/vocarichDb";
 import { memo, useState } from "react";
-import { useLiveQuery } from "dexie-react-hooks";
-import { countWordsByModule } from "../../db/crudWords";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import ActionsBottomSheet from "../Common/BottomSheet/ActionsBottomSheet";
 
@@ -11,6 +9,7 @@ type TModuleItem = {
   setEditingModule: React.Dispatch<React.SetStateAction<Module | null>>;
   setIsEditSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onAskDelete: (id: string) => void;
+  wordCount: number;
 };
 
 const ModuleItem = ({
@@ -18,14 +17,9 @@ const ModuleItem = ({
   setEditingModule,
   setIsEditSheetOpen,
   onAskDelete,
+  wordCount,
 }: TModuleItem) => {
   const [showMenu, setShowMenu] = useState(false);
-
-  const wordCount =
-    useLiveQuery(async () => {
-      if (!module?.id) return 0;
-      return await countWordsByModule(module.id);
-    }, [module?.id]) ?? 0;
 
   return (
     <>
