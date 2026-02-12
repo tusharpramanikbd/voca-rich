@@ -82,7 +82,6 @@ export const WordsModalProvider = ({
 
       {/* ADD */}
       <WordBottomSheet
-        key={addOpen ? "add-open" : "add-closed"}
         isOpen={addOpen}
         onClose={() => setAddOpen(false)}
         onSave={handleAdd}
@@ -90,7 +89,6 @@ export const WordsModalProvider = ({
 
       {/* EDIT */}
       <WordBottomSheet
-        key={editingWord?.id ?? "edit-closed"}
         isOpen={!!editingWord}
         onClose={() => setEditingWord(null)}
         onSave={handleEdit}

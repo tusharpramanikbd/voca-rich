@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { useState, memo, useEffect } from "react";
 import BaseBottomSheet from "../Common/BottomSheet/BaseBottomSheet";
 
 type TWordBottomSheet = {
@@ -41,6 +41,13 @@ const WordBottomSheet = ({
       setSaving(false);
     }
   };
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    setWord(initialWord ?? "");
+    setMeaning(initialMeaning ?? "");
+  }, [isOpen, initialWord, initialMeaning]);
 
   return (
     <BaseBottomSheet isOpen={isOpen} onClose={handleClose}>
