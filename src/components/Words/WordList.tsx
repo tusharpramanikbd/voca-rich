@@ -6,19 +6,10 @@ import WordItem from "./WordItem";
 
 type TWordList = {
   words: Word[] | undefined;
-  setEditingWord: React.Dispatch<React.SetStateAction<Word | null>>;
-  setIsEditSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onAskDelete: (id: string) => void;
   serachTerm?: string;
 };
 
-const WordList = ({
-  words,
-  setEditingWord,
-  setIsEditSheetOpen,
-  onAskDelete,
-  serachTerm,
-}: TWordList) => {
+const WordList = ({ words, serachTerm }: TWordList) => {
   const emptyNode =
     serachTerm && serachTerm.trim() !== "" && words && words.length === 0 ? (
       <NotFoundState />
@@ -30,15 +21,7 @@ const WordList = ({
     <BaseList
       items={words}
       renderEmpty={emptyNode}
-      renderItem={(word) => (
-        <WordItem
-          key={word.id}
-          word={word}
-          setEditingWord={setEditingWord}
-          setIsEditSheetOpen={setIsEditSheetOpen}
-          onAskDelete={onAskDelete}
-        />
-      )}
+      renderItem={(word) => <WordItem key={word.id} word={word} />}
     />
   );
 };

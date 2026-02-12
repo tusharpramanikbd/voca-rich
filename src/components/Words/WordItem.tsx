@@ -2,20 +2,14 @@ import type { Word } from "../../db/vocarichDb";
 import { memo, useState } from "react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import ActionsBottomSheet from "../Common/BottomSheet/ActionsBottomSheet";
+import { useWordsModal } from "../../providers/WordsModalProvider";
 
 type TWordItem = {
   word: Word;
-  setEditingWord: React.Dispatch<React.SetStateAction<Word | null>>;
-  setIsEditSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onAskDelete: (id: string) => void;
 };
 
-const WordItem = ({
-  word,
-  setEditingWord,
-  setIsEditSheetOpen,
-  onAskDelete,
-}: TWordItem) => {
+const WordItem = ({ word }: TWordItem) => {
+  const { openEditWord, openDeleteWord } = useWordsModal();
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -40,12 +34,11 @@ const WordItem = ({
         isOpen={showMenu}
         onClose={() => setShowMenu(false)}
         onEdit={() => {
-          setEditingWord(word);
-          setIsEditSheetOpen(true);
+          openEditWord(word);
           setShowMenu(false);
         }}
         onDelete={() => {
-          onAskDelete(word.id);
+          openDeleteWord(word.id);
           setShowMenu(false);
         }}
       />
