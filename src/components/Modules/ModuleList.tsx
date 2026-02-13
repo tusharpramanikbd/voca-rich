@@ -7,18 +7,11 @@ import { getWordCountsByModule } from "../../db/crudModules";
 
 type TModuleList = {
   modules: Module[] | undefined;
-  setEditingModule: React.Dispatch<React.SetStateAction<Module | null>>;
-  setIsEditSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onAskDelete: (id: string) => void;
 };
 
-const ModuleList = ({
-  modules,
-  setEditingModule,
-  setIsEditSheetOpen,
-  onAskDelete,
-}: TModuleList) => {
+const ModuleList = ({ modules }: TModuleList) => {
   const wordCounts = useLiveQuery(() => getWordCountsByModule(), []) ?? {};
+
   return (
     <BaseList
       items={modules}
@@ -27,9 +20,6 @@ const ModuleList = ({
         <ModuleItem
           key={module.id}
           module={module}
-          setEditingModule={setEditingModule}
-          setIsEditSheetOpen={setIsEditSheetOpen}
-          onAskDelete={onAskDelete}
           wordCount={wordCounts[module.id] ?? 0}
         />
       )}

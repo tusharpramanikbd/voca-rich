@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useIsPWA from "../hooks/useIsPWA";
 import SplashPage from "./SplashPage";
 import ModulesPage from "./ModulesPage";
+import { ModulesModalProvider } from "../providers/ModulesModalProvider";
 
 let hasShownSplash = false;
 
@@ -26,7 +27,11 @@ const AppLayout = () => {
   }
 
   // Show ModulesPage after splash
-  return <ModulesPage />;
+  return (
+    <ModulesModalProvider>
+      <ModulesPage />
+    </ModulesModalProvider>
+  );
 };
 
 export default AppLayout;

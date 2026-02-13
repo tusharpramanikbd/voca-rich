@@ -1,68 +1,43 @@
 import { Link } from "react-router";
 import type { Module } from "../../db/vocarichDb";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
-import ActionsBottomSheet from "../Common/BottomSheet/ActionsBottomSheet";
+import { useModulesModal } from "../../providers/ModulesModalProvider";
 
 type TModuleItem = {
   module: Module;
-  setEditingModule: React.Dispatch<React.SetStateAction<Module | null>>;
-  setIsEditSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onAskDelete: (id: string) => void;
   wordCount: number;
 };
 
-const ModuleItem = ({
-  module,
-  setEditingModule,
-  setIsEditSheetOpen,
-  onAskDelete,
-  wordCount,
-}: TModuleItem) => {
-  const [showMenu, setShowMenu] = useState(false);
+const ModuleItem = ({ module, wordCount }: TModuleItem) => {
+  const { openActions } = useModulesModal();
 
   return (
-    <>
-      <Link
-        to={`/app/m/${module?.id}+${module?.name}`}
-        className="block bg-white/70 backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-white/50 group"
-      >
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 group-hover:text-teal-600">
-              {module?.name}
-            </h2>
-            <p className="text-sm text-gray-500 mt-1">
-              {wordCount > 1 ? `${wordCount} words` : `${wordCount} word`}
-            </p>
-          </div>
-
-          {/* Single 3-dots button */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setShowMenu(true);
-            }}
-          >
-            <EllipsisVerticalIcon className="w-6 h-6" />
-          </button>
+    <Link
+      to={`/app/m/${module.id}+${module.name}`}
+      className="block bg-white/70 backdrop-blur-md rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all border border-white/50 group"
+    >
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-bold text-gray-900 group-hover:text-teal-600">
+            {module.name}
+          </h2>
+          <p className="text-sm text-gray-500 mt-1">
+            {wordCount > 1 ? `${wordCount} words` : `${wordCount} word`}
+          </p>
         </div>
-      </Link>
 
-      <ActionsBottomSheet
-        isOpen={showMenu}
-        onClose={() => setShowMenu(false)}
-        onEdit={() => {
-          setEditingModule(module);
-          setIsEditSheetOpen(true);
-          setShowMenu(false);
-        }}
-        onDelete={() => {
-          onAskDelete(module?.id);
-          setShowMenu(false);
-        }}
-      />
-    </>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openActions(module);
+          }}
+        >
+          <EllipsisVerticalIcon className="w-6 h-6" />
+        </button>
+      </div>
+    </Link>
   );
 };
 

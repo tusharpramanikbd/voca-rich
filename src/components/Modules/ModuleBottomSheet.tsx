@@ -14,7 +14,7 @@ const ModuleBottomSheet = ({
   onSave,
   initialWord = "",
 }: TModuleBottomSheet) => {
-  const [moduleTitle, setModuleTitle] = useState("");
+  const [moduleTitle, setModuleTitle] = useState(initialWord);
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {
@@ -24,24 +24,25 @@ const ModuleBottomSheet = ({
     setSaving(true);
     try {
       await onSave(trimmedModuleTitle);
-      onClose();
+      handleClose();
     } finally {
       setSaving(false);
     }
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      setModuleTitle(initialWord);
-    }
+  const handleClose = () => {
+    setModuleTitle(initialWord);
+    onClose();
+  };
 
-    return () => {
-      setModuleTitle("");
-    };
+  useEffect(() => {
+    if (!isOpen) return;
+
+    setModuleTitle(initialWord ?? "");
   }, [isOpen, initialWord]);
 
   return (
-    <BaseBottomSheet isOpen={isOpen} onClose={onClose}>
+    <BaseBottomSheet isOpen={isOpen} onClose={handleClose}>
       <div className="px-6 pb-8 space-y-4">
         <h3 className="text-2xl font-bold text-gray-900 text-center">
           Edit Module
@@ -65,7 +66,7 @@ const ModuleBottomSheet = ({
               {saving ? "Saving..." : "Save Changes"}
             </button>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               disabled={saving}
               className="px-8 bg-gray-200 text-gray-700 py-4 rounded-xl font-semibold hover:bg-gray-300 transition-colors disabled:opacity-50"
             >
