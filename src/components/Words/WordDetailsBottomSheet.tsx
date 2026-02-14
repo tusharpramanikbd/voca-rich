@@ -1,6 +1,7 @@
 import { memo } from "react";
 import BaseBottomSheet from "../Common/BottomSheet/BaseBottomSheet";
 import type { Word } from "../../db/vocarichDb";
+import WordAudioPlayer from "./WordAudioPlayer";
 
 type Props = {
   word: Word | null;
@@ -21,6 +22,8 @@ const WordDetailsBottomSheet = ({ word, isOpen, onClose }: Props) => {
             <p className="text-sm text-gray-500">Meaning</p>
             <p className="text-xl text-gray-800">{word?.meaning}</p>
           </div>
+
+          <WordAudioPlayer word={word} />
 
           {word?.sentence && word?.sentence?.trim() !== "" && (
             <div>

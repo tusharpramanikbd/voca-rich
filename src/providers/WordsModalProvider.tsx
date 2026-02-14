@@ -53,9 +53,14 @@ export const WordsModalProvider = ({
 
   // ---------- save ----------
 
-  const handleAdd = async (word: string, meaning: string, sentence: string) => {
+  const handleAdd = async (
+    word: string,
+    meaning: string,
+    sentence: string,
+    audioBlob: Blob | null,
+  ) => {
     if (!moduleId) return;
-    await createWord(moduleId, word, meaning, sentence);
+    await createWord(moduleId, word, meaning, sentence, audioBlob);
     setAddOpen(false);
   };
 
@@ -63,9 +68,10 @@ export const WordsModalProvider = ({
     word: string,
     meaning: string,
     sentence: string,
+    audioBlob: Blob | null,
   ) => {
     if (!editingWord) return;
-    await updateWord(editingWord.id, { word, meaning, sentence });
+    await updateWord(editingWord.id, { word, meaning, sentence, audioBlob });
     setEditingWord(null);
   };
 
@@ -106,6 +112,7 @@ export const WordsModalProvider = ({
         initialWord={editingWord?.word}
         initialMeaning={editingWord?.meaning}
         initialSentence={editingWord?.sentence}
+        initialAudio={editingWord?.audioBlob ?? null}
       />
 
       {/* DELETE */}

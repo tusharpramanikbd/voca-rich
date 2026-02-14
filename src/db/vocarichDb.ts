@@ -13,6 +13,7 @@ type Word = {
   word: string;
   meaning: string;
   sentence?: string;
+  audioBlob?: Blob | null;
   createdAt: number;
   updatedAt: number;
 };
@@ -43,6 +44,11 @@ db.version(2)
         }
       });
   });
+
+db.version(3).stores({
+  modules: "id, name, createdAt, updatedAt",
+  words: "id, moduleId, word, createdAt, updatedAt, [moduleId+word]",
+});
 
 export type { Module, Word };
 export { db };
