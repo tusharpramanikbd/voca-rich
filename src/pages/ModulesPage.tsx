@@ -8,10 +8,10 @@ const ModulesPage = () => {
     useModules();
 
   return (
-    <div className="h-dvh flex flex-col bg-linear-to-b from-teal-50 to-white">
+    <div className="h-screen flex flex-col overflow-hidden bg-linear-to-b from-teal-50 to-white">
       <div className="flex-0">
         <Header
-          title="Modules"
+          title="Language Modules"
           unit={modules && modules?.length > 1 ? "modules" : "module"}
           itemCount={modules?.length ?? 0}
           classes="pt-12"

@@ -17,12 +17,9 @@ const ModuleList = ({ modules }: TModuleList) => {
       items={modules}
       renderEmpty={<EmptyState emptyType="module" />}
       renderItem={(module) => (
-        <ModuleItem
-          key={module.id}
-          module={module}
-          wordCount={wordCounts[module.id] ?? 0}
-        />
+        <ModuleItem module={module} wordCount={wordCounts[module.id] ?? 0} />
       )}
+      bottomPadding={32}
     />
   );
 };

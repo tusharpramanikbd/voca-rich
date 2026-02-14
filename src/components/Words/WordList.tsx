@@ -21,7 +21,7 @@ const WordList = ({ words, serachTerm }: TWordList) => {
     <BaseList
       items={words}
       renderEmpty={emptyNode}
-      renderItem={(word) => <WordItem key={word.id} word={word} />}
+      renderItem={(word) => <WordItem word={word} />}
     />
   );
 };

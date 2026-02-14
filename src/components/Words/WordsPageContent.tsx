@@ -11,7 +11,7 @@ const WordsPageContent = () => {
   if (!moduleId) return <div>Invalid module</div>;
 
   return (
-    <div className="h-dvh flex flex-col bg-linear-to-b from-teal-50 to-white">
+    <div className="h-screen flex flex-col overflow-hidden bg-linear-to-b from-teal-50 to-white">
       <Header
         title={moduleName || "Module"}
         unit={wordCount > 1 ? "words" : "word"}

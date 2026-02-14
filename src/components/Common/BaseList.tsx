@@ -1,39 +1,52 @@
 import { type ReactNode } from "react";
+import { Virtuoso } from "react-virtuoso";
 import LoadingSkeleton from "./LoadingSkeleton";
 
 type TBaseList<T> = {
   items: T[] | undefined;
   renderEmpty: ReactNode;
-  renderItem: (item: T, index: number) => ReactNode;
+  renderItem: (item: T) => ReactNode;
   className?: string;
   bottomPadding?: number;
 };
 
-const BaseList = <T,>({
+const BaseList = <T extends { id: string }>({
   items,
   renderEmpty,
   renderItem,
   className = "",
-  bottomPadding = 4,
+  bottomPadding = 88,
 }: TBaseList<T>) => {
+  // Loading
   if (items === undefined) {
     return <LoadingSkeleton className={className} />;
   }
 
+  // Empty state
+  if (items.length === 0) {
+    return (
+      <div
+        className={`flex-1 flex items-center justify-center px-6 ${className}`}
+      >
+        {renderEmpty}
+      </div>
+    );
+  }
+
   return (
-    <div className={`flex-1 overflow-hidden ${className}`}>
-      {items?.length === 0 ? (
-        <div className="h-full flex items-center justify-center px-6">
-          {renderEmpty}
-        </div>
-      ) : (
-        <div
-          className="h-full overflow-y-auto px-6 space-y-4"
-          style={{ paddingBottom: `${bottomPadding}rem` }}
-        >
-          {items?.map((item, index) => renderItem(item, index))}
-        </div>
-      )}
+    <div className={`flex-1 ${className}`}>
+      <Virtuoso<T>
+        data={items}
+        style={{ height: "100%" }}
+        overscan={200}
+        computeItemKey={(_, item) => item.id}
+        itemContent={(_, item) => (
+          <div className="px-6 py-2">{renderItem(item)}</div>
+        )}
+        components={{
+          Footer: () => <div style={{ height: bottomPadding }} />,
+        }}
+      />
     </div>
   );
 };
