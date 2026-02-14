@@ -1,3 +1,4 @@
+import { memo } from "react";
 import BaseBottomSheet from "../Common/BottomSheet/BaseBottomSheet";
 import type { Word } from "../../db/vocarichDb";
 
@@ -35,4 +36,4 @@ const WordDetailsBottomSheet = ({ word, isOpen, onClose }: Props) => {
   );
 };
 
-export default WordDetailsBottomSheet;
+export default memo(WordDetailsBottomSheet);
