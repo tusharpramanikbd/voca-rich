@@ -33,6 +33,7 @@ const ModuleItem = ({ module, wordCount }: TModuleItem) => {
             e.stopPropagation();
             openActions(module);
           }}
+          className="p-4"
         >
           <EllipsisVerticalIcon className="w-6 h-6" />
         </button>

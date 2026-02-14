@@ -5,12 +5,14 @@ import { createWord, deleteWord, updateWord } from "../db/crudWords";
 import WordBottomSheet from "../components/Words/WordBottomSheet";
 import ConfirmBottomSheet from "../components/Common/BottomSheet/ConfirmBottomSheet";
 import ActionsBottomSheet from "../components/Common/BottomSheet/ActionsBottomSheet";
+import WordDetailsBottomSheet from "../components/Words/WordDetailsBottomSheet";
 
 type ContextType = {
   openAddWord: () => void;
   openEditWord: (word: Word) => void;
   openDeleteWord: (id: string) => void;
   openActions: (word: Word) => void;
+  openDetails: (word: Word) => void;
 };
 
 const WordsModalContext = createContext<ContextType | null>(null);
@@ -35,6 +37,7 @@ export const WordsModalProvider = ({
   const [editingWord, setEditingWord] = useState<Word | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [actionWord, setActionWord] = useState<Word | null>(null);
+  const [detailsWord, setDetailsWord] = useState<Word | null>(null);
 
   // ---------- actions ----------
 
@@ -46,17 +49,23 @@ export const WordsModalProvider = ({
 
   const openActions = (word: Word) => setActionWord(word);
 
+  const openDetails = (word: Word) => setDetailsWord(word);
+
   // ---------- save ----------
 
-  const handleAdd = async (word: string, meaning: string) => {
+  const handleAdd = async (word: string, meaning: string, sentence: string) => {
     if (!moduleId) return;
-    await createWord(moduleId, word, meaning);
+    await createWord(moduleId, word, meaning, sentence);
     setAddOpen(false);
   };
 
-  const handleEdit = async (word: string, meaning: string) => {
+  const handleEdit = async (
+    word: string,
+    meaning: string,
+    sentence: string,
+  ) => {
     if (!editingWord) return;
-    await updateWord(editingWord.id, { word, meaning });
+    await updateWord(editingWord.id, { word, meaning, sentence });
     setEditingWord(null);
   };
 
@@ -72,6 +81,7 @@ export const WordsModalProvider = ({
       openEditWord,
       openDeleteWord,
       openActions,
+      openDetails,
     }),
     [],
   );
@@ -95,6 +105,7 @@ export const WordsModalProvider = ({
         mode="edit"
         initialWord={editingWord?.word}
         initialMeaning={editingWord?.meaning}
+        initialSentence={editingWord?.sentence}
       />
 
       {/* DELETE */}
@@ -120,6 +131,13 @@ export const WordsModalProvider = ({
           openDeleteWord(actionWord.id);
           setActionWord(null);
         }}
+      />
+
+      {/* DETAILS */}
+      <WordDetailsBottomSheet
+        isOpen={!!detailsWord}
+        word={detailsWord}
+        onClose={() => setDetailsWord(null)}
       />
     </WordsModalContext.Provider>
   );

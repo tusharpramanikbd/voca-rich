@@ -4,10 +4,11 @@ import BaseBottomSheet from "../Common/BottomSheet/BaseBottomSheet";
 type TWordBottomSheet = {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (word: string, meaning: string) => Promise<void>;
+  onSave: (word: string, meaning: string, sentence: string) => Promise<void>;
   mode?: "add" | "edit";
   initialWord?: string;
   initialMeaning?: string;
+  initialSentence?: string;
 };
 
 const WordBottomSheet = ({
@@ -17,25 +18,32 @@ const WordBottomSheet = ({
   mode = "add",
   initialWord = "",
   initialMeaning = "",
+  initialSentence = "",
 }: TWordBottomSheet) => {
   const [word, setWord] = useState(initialWord);
   const [meaning, setMeaning] = useState(initialMeaning);
+  const [sentence, setSentence] = useState(initialSentence);
+
   const [saving, setSaving] = useState(false);
 
   const handleClose = () => {
     setWord(initialWord);
     setMeaning(initialMeaning);
+    setSentence(initialSentence);
+
     onClose();
   };
 
   const handleSave = async () => {
     const trimmedWord = word.trim();
     const trimmedMeaning = meaning.trim();
+    const trimmedSentence = sentence.trim();
+
     if (!trimmedWord || !trimmedMeaning) return;
 
     setSaving(true);
     try {
-      await onSave(trimmedWord, trimmedMeaning);
+      await onSave(trimmedWord, trimmedMeaning, trimmedSentence);
       handleClose();
     } finally {
       setSaving(false);
@@ -47,7 +55,8 @@ const WordBottomSheet = ({
 
     setWord(initialWord ?? "");
     setMeaning(initialMeaning ?? "");
-  }, [isOpen, initialWord, initialMeaning]);
+    setSentence(initialSentence ?? "");
+  }, [isOpen, initialWord, initialMeaning, initialSentence]);
 
   return (
     <BaseBottomSheet isOpen={isOpen} onClose={handleClose}>
@@ -70,6 +79,13 @@ const WordBottomSheet = ({
             placeholder="Meaning..."
             className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
             onKeyDown={(e) => e.key === "Enter" && handleSave()}
+          />
+          <textarea
+            value={sentence}
+            onChange={(e) => setSentence(e.target.value)}
+            placeholder="Example sentence (optional)..."
+            rows={3}
+            className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
           />
           <div className="flex gap-3 pt-2">
             <button

@@ -5,6 +5,7 @@ export const createWord = async (
   moduleId: string,
   word: string,
   meaning: string,
+  sentence?: string,
 ): Promise<Word> => {
   const now = Date.now();
   const w: Word = {
@@ -12,6 +13,7 @@ export const createWord = async (
     moduleId,
     word,
     meaning,
+    sentence: sentence ?? "",
     createdAt: now,
     updatedAt: now,
   };

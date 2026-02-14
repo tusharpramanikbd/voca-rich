@@ -12,6 +12,7 @@ type Word = {
   moduleId: string;
   word: string;
   meaning: string;
+  sentence?: string;
   createdAt: number;
   updatedAt: number;
 };
@@ -26,6 +27,22 @@ db.version(1).stores({
   modules: "id, name, createdAt, updatedAt",
   words: "id, moduleId, word, createdAt, updatedAt, [moduleId+word]",
 });
+
+db.version(2)
+  .stores({
+    modules: "id, name, createdAt, updatedAt",
+    words: "id, moduleId, word, createdAt, updatedAt, [moduleId+word]",
+  })
+  .upgrade(async (tx) => {
+    await tx
+      .table("words")
+      .toCollection()
+      .modify((word: Word) => {
+        if (word.sentence === undefined) {
+          word.sentence = "";
+        }
+      });
+  });
 
 export type { Module, Word };
 export { db };
