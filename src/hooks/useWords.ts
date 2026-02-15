@@ -34,6 +34,7 @@ const useWords = () => {
     }, [moduleId]) ?? 0;
 
   return {
+    module,
     moduleId,
     moduleName,
     words,
