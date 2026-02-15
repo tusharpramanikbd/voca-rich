@@ -1,6 +1,12 @@
-import { useState, memo, useEffect, useMemo } from "react";
+import { useState, memo, useEffect, useRef } from "react";
 import BaseBottomSheet from "../Common/BottomSheet/BaseBottomSheet";
 import useAudioRecorder from "../../hooks/useAudioRecorder";
+import {
+  MicrophoneIcon,
+  StopIcon,
+  PlayIcon,
+  TrashIcon,
+} from "@heroicons/react/24/solid";
 
 type TWordBottomSheet = {
   isOpen: boolean;
@@ -43,15 +49,22 @@ const WordBottomSheet = ({
   const [sentence, setSentence] = useState(initialSentence);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(initialAudio);
 
-  const previewUrl = useMemo(() => {
-    if (!audioBlob) return null;
-    return URL.createObjectURL(audioBlob);
-  }, [audioBlob]);
+  const audioPreviewRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlayingPreview, setIsPlayingPreview] = useState(false);
+
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleClose = async () => {
     if (isRecording) {
       await stopRecording();
     }
+
+    if (audioPreviewRef.current) {
+      audioPreviewRef.current.pause();
+      audioPreviewRef.current.currentTime = 0;
+    }
+
+    setIsPlayingPreview(false);
 
     onClose();
   };
@@ -85,6 +98,36 @@ const WordBottomSheet = ({
     setAudioBlob(null);
   };
 
+  const handlePlayPreview = () => {
+    if (!audioPreviewRef.current || !previewUrl) return;
+
+    audioPreviewRef.current.currentTime = 0;
+    audioPreviewRef.current.play();
+    setIsPlayingPreview(true);
+  };
+
+  const handleStopPreview = () => {
+    if (!audioPreviewRef.current) return;
+
+    audioPreviewRef.current.pause();
+    audioPreviewRef.current.currentTime = 0;
+    setIsPlayingPreview(false);
+  };
+
+  useEffect(() => {
+    if (!audioBlob) {
+      setPreviewUrl(null);
+      return;
+    }
+
+    const url = URL.createObjectURL(audioBlob);
+    setPreviewUrl(url);
+
+    return () => {
+      URL.revokeObjectURL(url);
+    };
+  }, [audioBlob]);
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -95,8 +138,14 @@ const WordBottomSheet = ({
   }, [isOpen, initialWord, initialMeaning, initialSentence, initialAudio]);
 
   useEffect(() => {
+    const audio = audioPreviewRef.current;
+    if (!audio) return;
+
+    const onEnded = () => setIsPlayingPreview(false);
+    audio.addEventListener("ended", onEnded);
+
     return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      audio.removeEventListener("ended", onEnded);
     };
   }, [previewUrl]);
 
@@ -128,43 +177,65 @@ const WordBottomSheet = ({
             className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
             onKeyDown={(e) => e.key === "Enter" && handleSave()}
           />
-          <div className="border-t pt-4 space-y-3">
-            <h3 className="font-semibold text-gray-800">
-              Pronunciation (optional)
-            </h3>
+          <div className="pt-4 space-y-4">
+            <h3 className="text-sm text-gray-500">Pronunciation (optional)</h3>
 
-            {!isRecording && (
-              <button
-                onClick={handleStartRecording}
-                className="w-full bg-teal-600 text-white py-3 rounded-xl"
-              >
-                🎙 Record pronunciation
-              </button>
-            )}
-
-            {isRecording && (
-              <button
-                onClick={handleStopRecording}
-                className="w-full bg-red-600 text-white py-3 rounded-xl animate-pulse"
-              >
-                ⏹ Stop recording
-              </button>
-            )}
-
-            {previewUrl && (
-              <>
-                <audio controls className="w-full">
-                  <source src={previewUrl} type="audio/webm" />
-                </audio>
-
+            <div className="flex items-center justify-center gap-6">
+              {/* RECORD BUTTON */}
+              {!audioBlob && !isRecording && (
                 <button
-                  onClick={handleDeleteRecording}
-                  className="w-full bg-gray-200 py-2 rounded-xl"
+                  onClick={handleStartRecording}
+                  className="w-12 h-12 rounded-full bg-teal-500 text-white flex items-center justify-center shadow-lg active:scale-95 transition"
                 >
-                  Delete recording
+                  <MicrophoneIcon className="w-6 h-6" />
                 </button>
-              </>
-            )}
+              )}
+
+              {/* RECORDING */}
+              {isRecording && (
+                <button
+                  onClick={handleStopRecording}
+                  className="w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center shadow-lg animate-pulse active:scale-95 transition"
+                >
+                  <StopIcon className="w-6 h-6" />
+                </button>
+              )}
+
+              {/* PLAY / STOP */}
+              {audioBlob && !isRecording && (
+                <>
+                  {!isPlayingPreview ? (
+                    <button
+                      onClick={handlePlayPreview}
+                      className="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow active:scale-95 transition"
+                    >
+                      <PlayIcon className="w-6 h-6" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleStopPreview}
+                      className="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow active:scale-95 transition"
+                    >
+                      <StopIcon className="w-6 h-6" />
+                    </button>
+                  )}
+
+                  <button
+                    onClick={handleDeleteRecording}
+                    className="w-12 h-12 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center active:scale-95 transition"
+                  >
+                    <TrashIcon className="w-6 h-6" />
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* hidden preview player */}
+            <audio
+              ref={audioPreviewRef}
+              src={previewUrl ?? undefined}
+              preload="auto"
+            />
           </div>
           <textarea
             value={sentence}

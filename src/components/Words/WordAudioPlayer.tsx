@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Word } from "../../db/vocarichDb";
+import { PlayIcon, StopIcon } from "@heroicons/react/24/solid";
 
 type Props = {
   word: Word | null;
@@ -8,50 +9,82 @@ type Props = {
 const WordAudioPlayer = ({ word }: Props) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const objectUrlRef = useRef<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    // clear previous audio
+    // cleanup previous
     audio.pause();
-    audio.removeAttribute("src");
+    audio.currentTime = 0;
+    audio.src = "";
     audio.load();
 
-    // revoke old url safely
     if (objectUrlRef.current) {
       URL.revokeObjectURL(objectUrlRef.current);
       objectUrlRef.current = null;
     }
 
-    // no recording
     if (!word?.audioBlob) return;
 
-    // create new url
     const url = URL.createObjectURL(word.audioBlob);
     objectUrlRef.current = url;
-
-    // IMPORTANT: attach directly to element
     audio.src = url;
-    audio.load();
 
-    // cleanup ONLY when component unmounts
+    const onEnded = () => setIsPlaying(false);
+    audio.addEventListener("ended", onEnded);
+
     return () => {
+      audio.removeEventListener("ended", onEnded);
+
       if (objectUrlRef.current) {
         URL.revokeObjectURL(objectUrlRef.current);
         objectUrlRef.current = null;
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [word?.id]); // only when different word is opened
+  }, [word?.id]);
 
   if (!word?.audioBlob) return null;
 
-  return (
-    <div className="mt-5 border-t pt-4 space-y-3">
-      <h3 className="font-semibold text-gray-800">Pronunciation</h3>
+  const handlePlay = () => {
+    if (!audioRef.current) return;
 
-      <audio ref={audioRef} controls preload="metadata" className="w-full" />
+    audioRef.current.currentTime = 0;
+    audioRef.current.play();
+    setIsPlaying(true);
+  };
+
+  const handleStop = () => {
+    if (!audioRef.current) return;
+
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+    setIsPlaying(false);
+  };
+
+  return (
+    <div className="flex items-center justify-between">
+      <span className="text-sm text-gray-500">Pronunciation</span>
+
+      {!isPlaying ? (
+        <button
+          onClick={handlePlay}
+          className="w-12 h-12 rounded-full bg-teal-500 text-white flex items-center justify-center shadow active:scale-95 transition"
+        >
+          <PlayIcon className="w-6 h-6" />
+        </button>
+      ) : (
+        <button
+          onClick={handleStop}
+          className="w-12 h-12 rounded-full bg-teal-500 text-white flex items-center justify-center shadow active:scale-95 transition"
+        >
+          <StopIcon className="w-6 h-6" />
+        </button>
+      )}
+
+      <audio ref={audioRef} preload="auto" />
     </div>
   );
 };
