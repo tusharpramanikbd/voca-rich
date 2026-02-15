@@ -1,6 +1,7 @@
 import useWords from "../../hooks/useWords";
 import Header from "../Common/Header";
 import AddWordFAB from "./AddWordFAB";
+import ChallengeFAB from "./ChallengeFAB";
 import WordList from "./WordList";
 import WordSearch from "./WordSearch";
 
@@ -23,6 +24,7 @@ const WordsPageContent = () => {
 
       <WordList words={words} serachTerm={searchTerm} />
 
+      <ChallengeFAB />
       <AddWordFAB />
     </div>
   );

@@ -3,8 +3,8 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 
 type THeader = {
   title: string;
-  unit: string;
-  itemCount: number;
+  unit?: string;
+  itemCount?: number;
   canGoBack?: boolean;
   classes?: string;
 };
@@ -30,9 +30,11 @@ const Header = ({ title, unit, itemCount, canGoBack, classes }: THeader) => {
       )}
       <div>
         <h1 className="text-3xl font-bold text-white mb-2">{title}</h1>
-        <p className="text-teal-100 text-lg">
-          {itemCount} {unit}
-        </p>
+        {unit && itemCount !== undefined && (
+          <p className="text-teal-100 text-lg">
+            {itemCount} {unit}
+          </p>
+        )}
       </div>
     </div>
   );

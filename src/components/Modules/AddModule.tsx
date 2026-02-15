@@ -23,7 +23,7 @@ const AddModule = ({
           <button
             onClick={handleCreateModule}
             disabled={!newModuleName.trim()}
-            className="bg-linear-to-r from-teal-500 to-blue-600 text-white text-3xl px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-linear-to-r from-teal-500 to-blue-600 text-white text-3xl px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
           >
             +
           </button>

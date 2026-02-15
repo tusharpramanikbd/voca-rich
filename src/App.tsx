@@ -5,6 +5,7 @@ import MobileOnlyGate from "./pages/MobileOnlyGate";
 import { useMobileOnlyGate } from "./hooks/useMobileOnlyGate";
 import useIsPWA from "./hooks/useIsPWA";
 import AppLayout from "./pages/AppLayout";
+import ChallengePage from "./pages/ChallengePage";
 
 const App = () => {
   const { shouldShowGate } = useMobileOnlyGate();
@@ -18,6 +19,10 @@ const App = () => {
             <Route path="/" element={<Navigate to="/app" replace />} />
             <Route path="/app/*" element={<AppLayout />} />
             <Route path="/app/m/:module" element={<WordsPage />} />
+            <Route
+              path="/app/m/:module/challenge"
+              element={<ChallengePage />}
+            />
             <Route path="*" element={<Navigate to="/app" replace />} />
           </>
         ) : (
@@ -26,6 +31,10 @@ const App = () => {
             <Route index element={<LandingPage />} />
             <Route path="/app/*" element={<AppLayout />} />
             <Route path="/app/m/:module" element={<WordsPage />} />
+            <Route
+              path="/app/m/:module/challenge"
+              element={<ChallengePage />}
+            />
             <Route path="*" element={<LandingPage />} />
           </>
         )}
