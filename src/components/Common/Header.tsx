@@ -30,7 +30,7 @@ const Header = ({
 
   return (
     <div
-      className={`bg-linear-to-r from-teal-500 to-blue-600 px-6 pt-6 pb-6 rounded-3xl mx-4 mt-1 shadow-2xl flex flex-col items-start gap-6 ${classes || ""}`}
+      className={`bg-linear-to-r from-teal-500 to-blue-600 px-4 pt-6 pb-6 rounded-3xl mx-4 mt-1 shadow-2xl flex flex-col items-start gap-6 ${classes || ""}`}
     >
       {canGoBack && (
         <button

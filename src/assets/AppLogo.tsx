@@ -9,9 +9,6 @@ const AppLogo = ({
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 558 90"
-      width="100%"
-      height="100%"
-      preserveAspectRatio="xMidYMid meet"
       className={className}
     >
       <g

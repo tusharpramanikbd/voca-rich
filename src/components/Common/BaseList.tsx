@@ -41,7 +41,7 @@ const BaseList = <T extends { id: string }>({
         overscan={200}
         computeItemKey={(_, item) => item.id}
         itemContent={(_, item) => (
-          <div className="px-6 py-2">{renderItem(item)}</div>
+          <div className="px-4 py-2">{renderItem(item)}</div>
         )}
         components={{
           Footer: () => <div style={{ height: bottomPadding }} />,
