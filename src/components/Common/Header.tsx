@@ -7,12 +7,24 @@ type THeader = {
   itemCount?: number;
   canGoBack?: boolean;
   classes?: string;
+  onGoBack?: () => void;
 };
 
-const Header = ({ title, unit, itemCount, canGoBack, classes }: THeader) => {
+const Header = ({
+  title,
+  unit,
+  itemCount,
+  canGoBack,
+  classes,
+  onGoBack,
+}: THeader) => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
+    if (onGoBack) {
+      onGoBack();
+      return;
+    }
     navigate(-1);
   };
 
