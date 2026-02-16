@@ -50,5 +50,11 @@ db.version(3).stores({
   words: "id, moduleId, word, createdAt, updatedAt, [moduleId+word]",
 });
 
+db.version(4).stores({
+  modules: "id, name, createdAt, updatedAt",
+  words:
+    "id, moduleId, word, createdAt, updatedAt, [moduleId+word], [moduleId+createdAt]",
+});
+
 export type { Module, Word };
 export { db };

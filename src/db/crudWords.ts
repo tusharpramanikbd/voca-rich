@@ -1,3 +1,4 @@
+import Dexie from "dexie";
 import { db, type Word } from "./vocarichDb.js";
 import { v4 as uuidv4 } from "uuid";
 
@@ -35,7 +36,11 @@ export const deleteWord = async (id: string): Promise<void> => {
 };
 
 export const listWordsByModule = async (moduleId: string): Promise<Word[]> => {
-  return await db.words.where("moduleId").equals(moduleId).toArray();
+  return await db.words
+    .where("[moduleId+createdAt]")
+    .between([moduleId, Dexie.minKey], [moduleId, Dexie.maxKey])
+    .reverse()
+    .toArray();
 };
 
 export const countWordsByModule = async (moduleId: string): Promise<number> => {
