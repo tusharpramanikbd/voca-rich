@@ -21,7 +21,7 @@ export default defineConfig({
         orientation: "portrait-primary",
 
         background_color: "#14b8a6",
-        theme_color: "#14b8a6",
+        theme_color: "#FFFFFF",
 
         icons: [
           {
