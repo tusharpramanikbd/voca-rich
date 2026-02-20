@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
-import useIsPWA from "../hooks/useIsPWA";
 import SplashPage from "./SplashPage";
 import ModulesPage from "./ModulesPage";
 import { ModulesModalProvider } from "../providers/ModulesModalProvider";
+import usePWAEnvironment from "../hooks/usePWAEnvironment";
 
 let hasShownSplash = false;
 
 const AppLayout = () => {
-  const isPWA = useIsPWA();
-  const [showSplash, setShowSplash] = useState(isPWA);
+  const { isIOSPWA } = usePWAEnvironment();
+  const [showSplash, setShowSplash] = useState(isIOSPWA);
 
   // Auto-hide splash after 1s for PWA
   useEffect(() => {
-    if (isPWA && showSplash) {
+    if (isIOSPWA && showSplash) {
       const timer = setTimeout(() => {
         setShowSplash(false);
         hasShownSplash = true;
-      }, 2000);
+      }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [isPWA, showSplash]);
+  }, [isIOSPWA, showSplash]);
 
   // PWA: Show splash first
   if (showSplash && !hasShownSplash) {

@@ -3,13 +3,13 @@ import LandingPage from "./pages/LandingPage";
 import WordsPage from "./pages/WordsPage";
 import MobileOnlyGate from "./pages/MobileOnlyGate";
 import { useMobileOnlyGate } from "./hooks/useMobileOnlyGate";
-import useIsPWA from "./hooks/useIsPWA";
 import AppLayout from "./pages/AppLayout";
 import ChallengePage from "./pages/ChallengePage";
+import usePWAEnvironment from "./hooks/usePWAEnvironment";
 
 const App = () => {
   const { shouldShowGate } = useMobileOnlyGate();
-  const isPWA = useIsPWA();
+  const { isPWA } = usePWAEnvironment();
 
   return (
     <div className="min-h-screen bg-gray-50">
