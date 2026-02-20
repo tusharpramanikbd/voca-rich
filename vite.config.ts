@@ -20,7 +20,7 @@ export default defineConfig({
         display: "standalone",
         orientation: "portrait-primary",
 
-        background_color: "#14b8a6",
+        background_color: "#FFFFFF",
         theme_color: "#FFFFFF",
 
         icons: [
