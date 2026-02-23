@@ -2,7 +2,7 @@ import Header from "../components/Common/Header";
 import useWords from "../hooks/useWords";
 import { useChallengeWords } from "../hooks/useChallengeWords";
 import { useChallengeEngine } from "../hooks/useChallengeEngine";
-import { useChallengeOptions } from "../hooks/useChallengeOptions";
+// import { useChallengeOptions } from "../hooks/useChallengeOptions";
 import ChallengeQuestionCard from "../components/Challenges/ChallengeQuestionCard";
 import ChallengeResult from "../components/Challenges/ChallengeResult";
 import LeaveChallengeSheet from "../components/Challenges/LeaveChallengeSheet";
@@ -15,10 +15,10 @@ const ChallengePage = () => {
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   const { module, moduleId, moduleName } = useWords();
-  const { challengeWords, loading } = useChallengeWords(moduleId);
+  const { challengeQuestions, loading } = useChallengeWords(moduleId);
   const {
     currentIndex,
-    currentWord,
+    currentQuestion,
     selectedOption,
     showResult,
     isCorrect,
@@ -27,8 +27,8 @@ const ChallengePage = () => {
     selectOption,
     submitAnswer,
     nextQuestion,
-  } = useChallengeEngine(challengeWords);
-  const options = useChallengeOptions(currentWord, challengeWords);
+  } = useChallengeEngine(challengeQuestions);
+  // const options = useChallengeOptions(currentQuestion, challengeQuestions);
 
   const handleGoBack = () => {
     // if challenge already finished
@@ -41,11 +41,13 @@ const ChallengePage = () => {
     setShowExitConfirm(true);
   };
 
-  if (!currentWord) return null;
+  if (!currentQuestion) return null;
   if (!module) return <div>Invalid module</div>;
 
   if (isFinished) {
-    return <ChallengeResult score={score} totalWords={challengeWords.length} />;
+    return (
+      <ChallengeResult score={score} totalWords={challengeQuestions.length} />
+    );
   }
 
   return (
@@ -56,20 +58,19 @@ const ChallengePage = () => {
         onGoBack={handleGoBack}
       />
 
-      {loading || !currentWord ? (
+      {loading || !currentQuestion ? (
         <div className="flex-1 overflow-y-auto flex items-center justify-center text-gray-500 text-lg px-6">
           Preparing your challenge...
         </div>
       ) : (
         <div className="flex-1 overflow-y-auto px-6 py-6">
           <ChallengeQuestionCard
-            currentWord={currentWord}
-            options={options}
+            currentQuestion={currentQuestion}
             selectedOption={selectedOption}
             showResult={showResult}
             isCorrect={isCorrect}
             currentIndex={currentIndex}
-            total={challengeWords.length}
+            total={challengeQuestions.length}
             onSelect={selectOption}
             onSubmit={submitAnswer}
             onNext={nextQuestion}

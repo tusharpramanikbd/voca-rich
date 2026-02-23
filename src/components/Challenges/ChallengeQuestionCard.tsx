@@ -1,8 +1,7 @@
-import type { Word } from "../../db/vocarichDb";
+import type { ChallengeQuestion } from "../../types/challengeQuestion";
 
 type TChallengeQuestionCard = {
-  currentWord: Word;
-  options: string[];
+  currentQuestion: ChallengeQuestion;
   selectedOption: string | null;
   showResult: boolean;
   isCorrect: boolean | null;
@@ -15,8 +14,7 @@ type TChallengeQuestionCard = {
 };
 
 const ChallengeQuestionCard = ({
-  currentWord,
-  options,
+  currentQuestion,
   selectedOption,
   showResult,
   isCorrect,
@@ -37,12 +35,12 @@ const ChallengeQuestionCard = ({
 
       {/* word */}
       <div className="text-4xl font-bold text-gray-800 wrap-break-words">
-        {currentWord.word}
+        {currentQuestion?.prompt}
       </div>
 
       {/* options */}
       <div className="w-full flex flex-col gap-3">
-        {options.map((opt, index) => (
+        {currentQuestion?.options.map((opt, index) => (
           <button
             key={index}
             onClick={() => {
@@ -52,7 +50,7 @@ const ChallengeQuestionCard = ({
             className={`w-full text-left px-5 py-4 rounded-2xl border shadow-sm transition
             ${
               showResult
-                ? opt === currentWord.meaning
+                ? opt === currentQuestion?.correctAnswer
                   ? "bg-green-100 border-green-500"
                   : opt === selectedOption
                     ? "bg-red-100 border-red-500"
@@ -89,7 +87,9 @@ const ChallengeQuestionCard = ({
           {!isCorrect && (
             <div className="text-gray-700 font-normal mt-2">
               Correct answer:{" "}
-              <span className="font-semibold">{currentWord.meaning}</span>
+              <span className="font-semibold">
+                {currentQuestion?.correctAnswer}
+              </span>
             </div>
           )}
         </div>

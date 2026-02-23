@@ -1,7 +1,7 @@
 import { useEffect, useEffectEvent, useState } from "react";
-import type { Word } from "../db/vocarichDb";
+import type { ChallengeQuestion } from "../types/challengeQuestion";
 
-export const useChallengeEngine = (challengeWords: Word[]) => {
+export const useChallengeEngine = (challengeQuestions: ChallengeQuestion[]) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
@@ -9,7 +9,7 @@ export const useChallengeEngine = (challengeWords: Word[]) => {
   const [isFinished, setIsFinished] = useState(false);
   const [score, setScore] = useState(0);
 
-  const currentWord = challengeWords[currentIndex];
+  const currentQuestion = challengeQuestions[currentIndex];
 
   const setClearForNextQuestion = useEffectEvent(() => {
     setSelectedOption(null);
@@ -28,9 +28,9 @@ export const useChallengeEngine = (challengeWords: Word[]) => {
   };
 
   const submitAnswer = () => {
-    if (!currentWord || !selectedOption || showResult) return;
+    if (!currentQuestion || !selectedOption || showResult) return;
 
-    const correct = selectedOption === currentWord.meaning;
+    const correct = selectedOption === currentQuestion.correctAnswer;
 
     setIsCorrect(correct);
     setShowResult(true);
@@ -41,7 +41,7 @@ export const useChallengeEngine = (challengeWords: Word[]) => {
   };
 
   const nextQuestion = () => {
-    const isLast = currentIndex === challengeWords.length - 1;
+    const isLast = currentIndex === challengeQuestions.length - 1;
 
     if (isLast) {
       setIsFinished(true);
@@ -54,7 +54,7 @@ export const useChallengeEngine = (challengeWords: Word[]) => {
   return {
     // state
     currentIndex,
-    currentWord,
+    currentQuestion,
     selectedOption,
     showResult,
     isCorrect,

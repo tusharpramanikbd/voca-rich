@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import type { Word } from "../db/vocarichDb";
 import { listWordsByModule } from "../db/crudWords";
+import type { ChallengeQuestion } from "../types/challengeQuestion";
+import { generateChallengeQuestions } from "../utils/challengeQuestionFactory";
 
 export const useChallengeWords = (moduleId: string | null) => {
   const navigate = useNavigate();
 
-  const [challengeWords, setChallengeWords] = useState<Word[]>([]);
+  const [challengeQuestions, setChallengeQuestions] = useState<
+    ChallengeQuestion[]
+  >([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,12 +30,15 @@ export const useChallengeWords = (moduleId: string | null) => {
       // challenge size
       const limit = Math.min(10, shuffled.length);
 
-      setChallengeWords(shuffled.slice(0, limit));
+      const selectedWords = shuffled.slice(0, limit);
+      const questions = generateChallengeQuestions(selectedWords);
+
+      setChallengeQuestions(questions);
       setLoading(false);
     };
 
     load();
   }, [moduleId, navigate]);
 
-  return { challengeWords, loading };
+  return { challengeQuestions, loading };
 };
