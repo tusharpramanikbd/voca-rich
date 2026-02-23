@@ -2,7 +2,6 @@ import Header from "../components/Common/Header";
 import useWords from "../hooks/useWords";
 import { useChallengeWords } from "../hooks/useChallengeWords";
 import { useChallengeEngine } from "../hooks/useChallengeEngine";
-// import { useChallengeOptions } from "../hooks/useChallengeOptions";
 import ChallengeQuestionCard from "../components/Challenges/ChallengeQuestionCard";
 import ChallengeResult from "../components/Challenges/ChallengeResult";
 import LeaveChallengeSheet from "../components/Challenges/LeaveChallengeSheet";
@@ -28,7 +27,6 @@ const ChallengePage = () => {
     submitAnswer,
     nextQuestion,
   } = useChallengeEngine(challengeQuestions);
-  // const options = useChallengeOptions(currentQuestion, challengeQuestions);
 
   const handleGoBack = () => {
     // if challenge already finished
