@@ -54,15 +54,26 @@ function createMeaningToWordQuestion(
   };
 }
 
+function createTypingQuestion(word: Word): ChallengeQuestion {
+  return {
+    id: crypto.randomUUID(),
+    type: "TYPE_WORD_FROM_MEANING",
+    prompt: word.meaning,
+    correctAnswer: word.word,
+    word,
+  };
+}
+
 export function generateChallengeQuestions(words: Word[]): ChallengeQuestion[] {
   return words.map((word) => {
-    // 50/50 random question type
-    const random = Math.random() < 0.5;
+    const rand = Math.random();
 
-    if (random) {
+    if (rand < 0.33) {
       return createWordToMeaningQuestion(word, words);
-    } else {
+    } else if (rand < 0.66) {
       return createMeaningToWordQuestion(word, words);
+    } else {
+      return createTypingQuestion(word);
     }
   });
 }

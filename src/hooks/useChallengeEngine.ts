@@ -1,6 +1,10 @@
 import { useEffect, useEffectEvent, useState } from "react";
 import type { ChallengeQuestion } from "../types/challengeQuestion";
 
+function normalize(text: string) {
+  return text.trim().toLowerCase();
+}
+
 export const useChallengeEngine = (challengeQuestions: ChallengeQuestion[]) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -30,7 +34,8 @@ export const useChallengeEngine = (challengeQuestions: ChallengeQuestion[]) => {
   const submitAnswer = () => {
     if (!currentQuestion || !selectedOption || showResult) return;
 
-    const correct = selectedOption === currentQuestion.correctAnswer;
+    const correct =
+      normalize(selectedOption) === normalize(currentQuestion.correctAnswer);
 
     setIsCorrect(correct);
     setShowResult(true);
