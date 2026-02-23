@@ -7,14 +7,9 @@ export type ChallengeQuestionType =
 
 export type ChallengeQuestion = {
   id: string;
-
   type: ChallengeQuestionType;
-
   word: Word; // original source word
-
   prompt: string; // what user sees as question
-
   correctAnswer: string;
-
   options?: string[]; // Only for MCQ types
 };

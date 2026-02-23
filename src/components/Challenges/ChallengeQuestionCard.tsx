@@ -1,4 +1,5 @@
 import type { ChallengeQuestion } from "../../types/challengeQuestion";
+import { QUESTION_RENDERERS } from "./questionRenderers/questionRendererRegistry";
 
 type TChallengeQuestionCard = {
   currentQuestion: ChallengeQuestion;
@@ -26,6 +27,12 @@ const ChallengeQuestionCard = ({
 }: TChallengeQuestionCard) => {
   const isLast = currentIndex === total - 1;
 
+  const Renderer = QUESTION_RENDERERS[currentQuestion.type];
+
+  if (!Renderer) {
+    throw new Error(`No renderer registered for type: ${currentQuestion.type}`);
+  }
+
   return (
     <div className="max-w-md mx-auto flex flex-col text-center gap-8">
       {/* progress */}
@@ -33,53 +40,19 @@ const ChallengeQuestionCard = ({
         {currentIndex + 1} / {total}
       </div>
 
-      {/* word */}
+      {/* prompt */}
       <div className="text-4xl font-bold text-gray-800 wrap-break-words">
         {currentQuestion?.prompt}
       </div>
 
-      {/* options */}
-      <div className="w-full flex flex-col gap-3">
-        {currentQuestion.type !== "TYPE_WORD_FROM_MEANING" ? (
-          <div className="w-full flex flex-col gap-3">
-            {currentQuestion.options?.map((opt, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  if (showResult) return;
-                  onSelect(opt);
-                }}
-                className={`w-full text-left px-5 py-4 rounded-2xl border shadow-sm transition
-        ${
-          showResult
-            ? opt === currentQuestion.correctAnswer
-              ? "bg-green-100 border-green-500"
-              : opt === selectedOption
-                ? "bg-red-100 border-red-500"
-                : "bg-white"
-            : selectedOption === opt
-              ? "border-teal-500 bg-teal-50"
-              : "bg-white hover:bg-gray-50"
-        }
-      `}
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-        ) : (
-          <div className="w-full">
-            <input
-              type="text"
-              value={selectedOption ?? ""}
-              disabled={showResult}
-              onChange={(e) => onSelect(e.target.value)}
-              placeholder="Type your answer..."
-              className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
-            />
-          </div>
-        )}
-      </div>
+      {/* question */}
+      <Renderer
+        question={currentQuestion}
+        selectedOption={selectedOption}
+        showResult={showResult}
+        isCorrect={isCorrect}
+        onSelect={onSelect}
+      />
 
       {/* submit */}
       <button
