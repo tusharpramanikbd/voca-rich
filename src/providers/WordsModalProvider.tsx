@@ -6,7 +6,7 @@ import WordBottomSheet from "../components/Words/WordBottomSheet";
 import ConfirmBottomSheet from "../components/Common/BottomSheet/ConfirmBottomSheet";
 import ActionsBottomSheet from "../components/Common/BottomSheet/ActionsBottomSheet";
 import WordDetailsBottomSheet from "../components/Words/WordDetailsBottomSheet";
-import useGroups from "../hooks/useGroups";
+import { useGroupsContext } from "./GroupsProvider";
 
 type ContextType = {
   openAddWord: () => void;
@@ -40,7 +40,7 @@ export const WordsModalProvider = ({
   const [actionWord, setActionWord] = useState<Word | null>(null);
   const [detailsWord, setDetailsWord] = useState<Word | null>(null);
 
-  const { groups, selectedGroupId } = useGroups();
+  const { groups, selectedGroupId } = useGroupsContext();
 
   // ---------- actions ----------
 

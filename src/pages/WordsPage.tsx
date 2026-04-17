@@ -1,11 +1,14 @@
 import WordsPageContent from "../components/Words/WordsPageContent";
+import { GroupsProvider } from "../providers/GroupsProvider";
 import { WordsModalProvider } from "../providers/WordsModalProvider";
 
 const WordsPage = () => {
   return (
-    <WordsModalProvider>
-      <WordsPageContent />
-    </WordsModalProvider>
+    <GroupsProvider>
+      <WordsModalProvider>
+        <WordsPageContent />
+      </WordsModalProvider>
+    </GroupsProvider>
   );
 };
 
