@@ -6,6 +6,7 @@ import {
   StopIcon,
   PlayIcon,
   TrashIcon,
+  ChevronDownIcon,
 } from "@heroicons/react/24/solid";
 import type { Group } from "../../db/vocarichDb";
 
@@ -196,38 +197,55 @@ const WordBottomSheet = ({
         </h3>
 
         <div className="space-y-3">
-          <input
-            value={word}
-            onChange={(e) => setWord(e.target.value)}
-            placeholder="Word..."
-            className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
-            onKeyDown={(e) => e.key === "Enter" && handleSave()}
-          />
-          <input
-            value={meaning}
-            onChange={(e) => setMeaning(e.target.value)}
-            placeholder="Meaning..."
-            className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
-            onKeyDown={(e) => e.key === "Enter" && handleSave()}
-          />
           <div>
-            <select
-              value={groupId ?? "ALL"}
-              onChange={(e) => {
-                const value = e.target.value;
-                setGroupId(value === "ALL" ? undefined : value);
-              }}
-              className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
-            >
-              {groups.map((g) => (
-                <option key={g.id} value={g.id}>
-                  {g.name}
-                </option>
-              ))}
-            </select>
+            <h3 className="text-sm text-gray-950">Word Title</h3>
+            <input
+              value={word}
+              onChange={(e) => setWord(e.target.value)}
+              placeholder="Type word title..."
+              className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg mt-2 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              onKeyDown={(e) => e.key === "Enter" && handleSave()}
+            />
           </div>
+
+          <div>
+            <h3 className="text-sm text-gray-950">Word Meaning</h3>
+            <input
+              value={meaning}
+              onChange={(e) => setMeaning(e.target.value)}
+              placeholder="Type word meaning..."
+              className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg mt-2 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              onKeyDown={(e) => e.key === "Enter" && handleSave()}
+            />
+          </div>
+
+          <div>
+            <h3 className="text-sm text-gray-950">Select Group</h3>
+            <div className="relative mt-2">
+              <select
+                value={groupId ?? "ALL"}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setGroupId(value === "ALL" ? undefined : value);
+                }}
+                className="w-full appearance-none bg-white/50 border border-gray-200 rounded-xl px-5 py-4 pr-12 text-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+              >
+                {groups.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.name}
+                  </option>
+                ))}
+              </select>
+
+              {/* Custom arrow */}
+              <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+                <ChevronDownIcon className="w-4 h-4" />
+              </div>
+            </div>
+          </div>
+
           <div className="pt-4 space-y-4">
-            <h3 className="text-sm text-gray-500">Pronunciation (optional)</h3>
+            <h3 className="text-sm text-gray-950">Pronunciation (optional)</h3>
 
             <div className="flex items-center justify-center gap-6">
               {/* RECORD BUTTON */}
@@ -286,13 +304,19 @@ const WordBottomSheet = ({
               preload="auto"
             />
           </div>
-          <textarea
-            value={sentence}
-            onChange={(e) => setSentence(e.target.value)}
-            placeholder="Example sentence (optional)..."
-            rows={3}
-            className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
-          />
+          <div>
+            <h3 className="text-sm text-gray-950">
+              Example Sentences (optional)
+            </h3>
+            <textarea
+              value={sentence}
+              onChange={(e) => setSentence(e.target.value)}
+              placeholder="Type example sentences..."
+              rows={3}
+              className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 mt-2 text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+            />
+          </div>
+
           <div className="flex gap-3 pt-2">
             <button
               onClick={handleSave}
