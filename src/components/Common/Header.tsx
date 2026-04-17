@@ -30,24 +30,25 @@ const Header = ({
 
   return (
     <div
-      className={`bg-linear-to-r from-teal-500 to-blue-600 px-4 pt-6 pb-6 rounded-3xl mx-4 mt-1 shadow-2xl flex flex-col items-start gap-6 ${classes || ""}`}
+      className={`bg-linear-to-r from-teal-500 to-blue-600 p-4 rounded-3xl mx-4 mt-1 shadow-2xl flex flex-col items-start gap-4 ${classes || ""}`}
     >
-      {canGoBack && (
-        <button
-          onClick={handleGoBack}
-          className="inline-flex items-center text-white/90"
-        >
-          <ChevronLeftIcon className="w-6 h-6" />
-        </button>
-      )}
-      <div>
-        <h1 className="text-3xl font-bold text-white mb-2">{title}</h1>
-        {unit && itemCount !== undefined && (
-          <p className="text-teal-100 text-lg">
-            {itemCount} {unit}
-          </p>
+      <div className="flex items-center justify-center gap-4">
+        {canGoBack && (
+          <button
+            onClick={handleGoBack}
+            className="inline-flex items-center text-white/90"
+          >
+            <ChevronLeftIcon className="w-6 h-6" />
+          </button>
         )}
+        <h1 className="text-3xl font-bold text-white">{title}</h1>
       </div>
+
+      {unit && itemCount !== undefined && (
+        <p className="text-teal-100 text-lg">
+          {itemCount} {unit}
+        </p>
+      )}
     </div>
   );
 };

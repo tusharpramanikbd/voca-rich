@@ -14,7 +14,7 @@ const ModulesPage = () => {
           title="Language Modules"
           unit={modules && modules?.length > 1 ? "modules" : "module"}
           itemCount={modules?.length ?? 0}
-          classes="pt-12"
+          classes="pt-8"
         />
 
         <AddModule
