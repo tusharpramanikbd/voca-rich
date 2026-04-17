@@ -17,7 +17,7 @@ const GroupList = ({
   onAddGroup,
 }: TGroupList) => {
   return (
-    <div className="relative">
+    <div className="relative mx-4 mt-4 rounded-2xl overflow-x-hidden">
       {/* Horizontal list */}
       <HorizontalList
         items={groups}
@@ -31,14 +31,14 @@ const GroupList = ({
       />
 
       {/* Right fade + button overlay */}
-      <div className="pointer-events-none absolute right-0 top-0 h-full flex items-center">
+      <div className="pointer-events-none absolute -right-px top-0 h-full flex items-center">
         {/* Fade effect */}
-        <div className="w-20 h-full bg-linear-to-l from-white via-white/80 to-transparent" />
+        <div className="w-18 h-full bg-linear-to-l from-white via-white/90 to-transparent rounded-r-2xl" />
 
         {/* Button */}
         <button
           onClick={onAddGroup}
-          className="pointer-events-auto absolute right-3 w-10 h-10 rounded-full bg-teal-500 text-white flex items-center justify-center shadow-lg active:scale-95 transition"
+          className="pointer-events-auto absolute right-2 w-10 h-10 rounded-full bg-teal-500 text-white flex items-center justify-center shadow-lg active:scale-95 transition"
         >
           <PlusIcon className="w-5 h-5" />
         </button>
