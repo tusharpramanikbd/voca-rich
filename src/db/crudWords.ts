@@ -8,6 +8,7 @@ export const createWord = async (
   meaning: string,
   sentence?: string,
   audioBlob?: Blob | null,
+  groupId?: string | null,
 ): Promise<Word> => {
   const now = Date.now();
   const w: Word = {
@@ -17,6 +18,7 @@ export const createWord = async (
     meaning,
     sentence: sentence ?? "",
     audioBlob: audioBlob ?? null,
+    groupId: groupId ?? null,
     createdAt: now,
     updatedAt: now,
   };

@@ -6,6 +6,7 @@ import WordBottomSheet from "../components/Words/WordBottomSheet";
 import ConfirmBottomSheet from "../components/Common/BottomSheet/ConfirmBottomSheet";
 import ActionsBottomSheet from "../components/Common/BottomSheet/ActionsBottomSheet";
 import WordDetailsBottomSheet from "../components/Words/WordDetailsBottomSheet";
+import useGroups from "../hooks/useGroups";
 
 type ContextType = {
   openAddWord: () => void;
@@ -39,6 +40,8 @@ export const WordsModalProvider = ({
   const [actionWord, setActionWord] = useState<Word | null>(null);
   const [detailsWord, setDetailsWord] = useState<Word | null>(null);
 
+  const { groups, selectedGroupId } = useGroups();
+
   // ---------- actions ----------
 
   const openAddWord = () => setAddOpen(true);
@@ -58,9 +61,10 @@ export const WordsModalProvider = ({
     meaning: string,
     sentence: string,
     audioBlob: Blob | null,
+    groupId?: string,
   ) => {
     if (!moduleId) return;
-    await createWord(moduleId, word, meaning, sentence, audioBlob);
+    await createWord(moduleId, word, meaning, sentence, audioBlob, groupId);
     setAddOpen(false);
   };
 
@@ -69,9 +73,16 @@ export const WordsModalProvider = ({
     meaning: string,
     sentence: string,
     audioBlob: Blob | null,
+    groupId?: string,
   ) => {
     if (!editingWord) return;
-    await updateWord(editingWord.id, { word, meaning, sentence, audioBlob });
+    await updateWord(editingWord.id, {
+      word,
+      meaning,
+      sentence,
+      audioBlob,
+      groupId,
+    });
     setEditingWord(null);
   };
 
@@ -101,6 +112,8 @@ export const WordsModalProvider = ({
         isOpen={addOpen}
         onClose={() => setAddOpen(false)}
         onSave={handleAdd}
+        groups={groups}
+        selectedGroupId={selectedGroupId}
       />
 
       {/* EDIT */}
@@ -113,6 +126,9 @@ export const WordsModalProvider = ({
         initialMeaning={editingWord?.meaning}
         initialSentence={editingWord?.sentence}
         initialAudio={editingWord?.audioBlob ?? null}
+        initialGroupId={editingWord?.groupId ?? undefined}
+        groups={groups}
+        selectedGroupId={selectedGroupId}
       />
 
       {/* DELETE */}

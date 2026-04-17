@@ -7,6 +7,7 @@ import {
   PlayIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
+import type { Group } from "../../db/vocarichDb";
 
 type TWordBottomSheet = {
   isOpen: boolean;
@@ -16,12 +17,18 @@ type TWordBottomSheet = {
     meaning: string,
     sentence: string,
     audioBlob: Blob | null,
+    groupId?: string,
   ) => Promise<void>;
+
+  groups: Group[];
+  selectedGroupId?: string;
+
   mode?: "add" | "edit";
   initialWord?: string;
   initialMeaning?: string;
   initialSentence?: string;
   initialAudio?: Blob | null;
+  initialGroupId?: string;
 };
 
 const WordBottomSheet = ({
@@ -33,6 +40,9 @@ const WordBottomSheet = ({
   initialMeaning = "",
   initialSentence = "",
   initialAudio = null,
+  initialGroupId,
+  groups,
+  selectedGroupId = "ALL",
 }: TWordBottomSheet) => {
   const {
     startRecording,
@@ -48,6 +58,8 @@ const WordBottomSheet = ({
   const [meaning, setMeaning] = useState(initialMeaning);
   const [sentence, setSentence] = useState(initialSentence);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(initialAudio);
+
+  const [groupId, setGroupId] = useState<string | undefined>(undefined);
 
   const audioPreviewRef = useRef<HTMLAudioElement | null>(null);
   const [isPlayingPreview, setIsPlayingPreview] = useState(false);
@@ -78,7 +90,13 @@ const WordBottomSheet = ({
 
     setSaving(true);
     try {
-      await onSave(trimmedWord, trimmedMeaning, trimmedSentence, audioBlob);
+      await onSave(
+        trimmedWord,
+        trimmedMeaning,
+        trimmedSentence,
+        audioBlob,
+        groupId,
+      );
       handleClose();
     } finally {
       setSaving(false);
@@ -135,7 +153,22 @@ const WordBottomSheet = ({
     setMeaning(initialMeaning ?? "");
     setSentence(initialSentence ?? "");
     setAudioBlob(initialAudio ?? null);
-  }, [isOpen, initialWord, initialMeaning, initialSentence, initialAudio]);
+
+    if (mode === "edit") {
+      setGroupId(initialGroupId);
+    } else {
+      setGroupId(selectedGroupId === "ALL" ? undefined : selectedGroupId);
+    }
+  }, [
+    isOpen,
+    initialWord,
+    initialMeaning,
+    initialSentence,
+    initialAudio,
+    mode,
+    initialGroupId,
+    selectedGroupId,
+  ]);
 
   useEffect(() => {
     const audio = audioPreviewRef.current;
@@ -177,6 +210,22 @@ const WordBottomSheet = ({
             className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
             onKeyDown={(e) => e.key === "Enter" && handleSave()}
           />
+          <div>
+            <select
+              value={groupId ?? "ALL"}
+              onChange={(e) => {
+                const value = e.target.value;
+                setGroupId(value === "ALL" ? undefined : value);
+              }}
+              className="w-full bg-white/50 border border-gray-200 rounded-xl px-5 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+            >
+              {groups.map((g) => (
+                <option key={g.id} value={g.id}>
+                  {g.name}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="pt-4 space-y-4">
             <h3 className="text-sm text-gray-500">Pronunciation (optional)</h3>
 
