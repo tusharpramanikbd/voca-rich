@@ -28,7 +28,7 @@ const WordDetailsBottomSheet = ({ word, isOpen, onClose }: Props) => {
           {word?.sentence && word?.sentence?.trim() !== "" && (
             <div>
               <p className="text-sm text-gray-500">Example</p>
-              <p className="text-lg text-gray-700 italic leading-relaxed">
+              <p className="text-lg text-gray-700 italic leading-relaxed whitespace-pre-line wrap-break-word">
                 {word?.sentence}
               </p>
             </div>
