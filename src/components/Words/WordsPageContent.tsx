@@ -1,7 +1,5 @@
-import { useState } from "react";
 import useWords from "../../hooks/useWords";
 import Header from "../Common/Header";
-import CreateGroupBottomSheet from "../Groups/CreateGroupBottomSheet";
 import GroupList from "../Groups/GroupList";
 import AddWordFAB from "./AddWordFAB";
 import ChallengeFAB from "./ChallengeFAB";
@@ -10,9 +8,7 @@ import WordSearch from "./WordSearch";
 import { useGroupsContext } from "../../providers/GroupsProvider";
 
 const WordsPageContent = () => {
-  const [showCreateGroup, setShowCreateGroup] = useState(false);
-
-  const { groups, selectedGroupId, setSelectedGroupId, handleCreateGroup } =
+  const { groups, selectedGroupId, setSelectedGroupId, openCreateGroup } =
     useGroupsContext();
   const { moduleName, moduleId, words, wordCount, searchTerm, setSearchTerm } =
     useWords(selectedGroupId);
@@ -32,7 +28,7 @@ const WordsPageContent = () => {
         groups={groups}
         selectedGroupId={selectedGroupId}
         setSelectedGroupId={setSelectedGroupId}
-        onAddGroup={() => setShowCreateGroup(true)}
+        onAddGroup={openCreateGroup}
       />
 
       <WordSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -41,12 +37,6 @@ const WordsPageContent = () => {
 
       <ChallengeFAB />
       <AddWordFAB />
-
-      <CreateGroupBottomSheet
-        isOpen={showCreateGroup}
-        onClose={() => setShowCreateGroup(false)}
-        onCreate={handleCreateGroup}
-      />
     </div>
   );
 };

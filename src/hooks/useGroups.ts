@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useParams } from "react-router";
-import { listGroupsByModule, createGroup } from "../db/crudGroups";
+import { listGroupsByModule } from "../db/crudGroups";
 import { db, type Group } from "../db/vocarichDb";
 
 const ALL_GROUP_ID = "ALL";
@@ -52,19 +52,10 @@ const useGroups = () => {
     })),
   ];
 
-  const handleCreateGroup = async (name: string) => {
-    if (!moduleId) return;
-    const trimmed = name.trim();
-    if (!trimmed) return;
-
-    await createGroup(moduleId, trimmed);
-  };
-
   return {
     groups: groupsWithAll,
     selectedGroupId,
     setSelectedGroupId,
-    handleCreateGroup,
     isAllSelected: selectedGroupId === ALL_GROUP_ID,
   };
 };
