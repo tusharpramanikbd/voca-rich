@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { listGroupsByModule } from "../db/crudGroups";
 import { db, type Group } from "../db/vocarichDb";
 
-const ALL_GROUP_ID = "ALL";
+export const ALL_GROUP_ID = "ALL";
 
 const useGroups = () => {
   const { module } = useParams();
