@@ -23,7 +23,7 @@ const HorizontalList = <T extends { id: string }>({
 
   return (
     <div
-      className={`flex gap-3 overflow-x-auto px-4 py-2 scrollbar-hide ${className}`}
+      className={`flex gap-3 overflow-x-auto px-4 py-2 pr-14 scrollbar-hide ${className}`}
       style={{
         WebkitOverflowScrolling: "touch",
       }}

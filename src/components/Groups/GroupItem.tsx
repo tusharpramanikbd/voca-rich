@@ -1,7 +1,9 @@
 import type { Group } from "../../db/vocarichDb";
 
 type TGroupItem = {
-  group: Group;
+  group: Group & {
+    count?: number;
+  };
   selectedGroupId: string | undefined;
   setSelectedGroupId: (id: string) => void;
 };
@@ -23,6 +25,7 @@ const GroupItem = ({
       `}
     >
       {group.name}
+      {group.count !== undefined && `(${group.count})`}
     </button>
   );
 };
