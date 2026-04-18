@@ -22,6 +22,7 @@ const WordList = ({ words, serachTerm }: TWordList) => {
       items={words}
       renderEmpty={emptyNode}
       renderItem={(word) => <WordItem word={word} />}
+      bottomPadding={120}
     />
   );
 };
