@@ -19,6 +19,26 @@ export const createGroup = async (
   return group;
 };
 
+export const renameGroup = async (id: string, name: string): Promise<void> => {
+  await db.groups.update(id, { name, updatedAt: Date.now() });
+};
+
+export const deleteGroup = async (groupId: string): Promise<void> => {
+  await db.transaction("rw", db.groups, db.words, async () => {
+    // 1. reset groupId for all words in this group
+    await db.words
+      .where("groupId")
+      .equals(groupId)
+      .modify((word) => {
+        word.groupId = undefined;
+        word.updatedAt = Date.now();
+      });
+
+    // 2. delete the group
+    await db.groups.delete(groupId);
+  });
+};
+
 export const listGroupsByModule = async (
   moduleId: string,
 ): Promise<Group[]> => {

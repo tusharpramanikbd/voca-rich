@@ -1,17 +1,22 @@
 import { useState, memo, useEffect } from "react";
 import BaseBottomSheet from "../Common/BottomSheet/BaseBottomSheet";
 
-type TCreateGroupBottomSheet = {
+type TCreateOrEditGroupBottomSheet = {
   isOpen: boolean;
   onClose: () => void;
   onCreate: (name: string) => Promise<void>;
+
+  mode?: "add" | "edit";
+  initialGroupName?: string;
 };
 
-const CreateGroupBottomSheet = ({
+const CreateOrEditGroupBottomSheet = ({
   isOpen,
   onClose,
   onCreate,
-}: TCreateGroupBottomSheet) => {
+  mode = "add",
+  initialGroupName = "",
+}: TCreateOrEditGroupBottomSheet) => {
   const [groupName, setGroupName] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -35,14 +40,14 @@ const CreateGroupBottomSheet = ({
 
   useEffect(() => {
     if (!isOpen) return;
-    setGroupName("");
-  }, [isOpen]);
+    setGroupName(initialGroupName ?? "");
+  }, [initialGroupName, isOpen]);
 
   return (
     <BaseBottomSheet isOpen={isOpen} onClose={handleClose}>
       <div className="px-6 pb-8 space-y-4">
         <h3 className="text-2xl font-bold text-gray-900 text-center">
-          Create Group
+          {mode === "add" ? "Create New Group" : "Edit Group"}
         </h3>
 
         <div className="space-y-3">
@@ -61,7 +66,11 @@ const CreateGroupBottomSheet = ({
               disabled={!groupName.trim() || saving}
               className="flex-1 bg-linear-to-r from-teal-500 to-blue-600 text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {saving ? "Creating..." : "Create"}
+              {saving
+                ? "Saving..."
+                : mode === "add"
+                  ? "Create Group"
+                  : "Save Changes"}
             </button>
 
             <button
@@ -78,4 +87,4 @@ const CreateGroupBottomSheet = ({
   );
 };
 
-export default memo(CreateGroupBottomSheet);
+export default memo(CreateOrEditGroupBottomSheet);

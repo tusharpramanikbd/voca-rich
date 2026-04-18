@@ -1,6 +1,7 @@
 import type { Group } from "../../db/vocarichDb";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import { ALL_GROUP_ID } from "../../hooks/useGroups";
+import { useGroupsContext } from "../../providers/GroupsProvider";
 
 type TGroupItem = {
   group: Group & {
@@ -15,6 +16,7 @@ const GroupItem = ({
   selectedGroupId,
   setSelectedGroupId,
 }: TGroupItem) => {
+  const { openActions } = useGroupsContext();
   return (
     <div
       onClick={() => setSelectedGroupId(group.id)}
@@ -38,6 +40,7 @@ const GroupItem = ({
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            openActions(group);
           }}
           className="px-2"
         >
