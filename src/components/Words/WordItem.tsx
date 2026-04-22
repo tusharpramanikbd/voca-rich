@@ -30,7 +30,7 @@ const WordItem = ({ word }: TWordItem) => {
             {word?.word}
           </h3>
           {isAllGroup && isWordGrouped && (
-            <CheckCircleIcon className="w-4 h-4" />
+            <CheckCircleIcon className="w-4 h-4 text-teal-500" />
           )}
         </div>
         <p className="text-lg text-gray-700 leading-relaxed">{word?.meaning}</p>
