@@ -7,9 +7,10 @@ import WordItem from "./WordItem";
 type TWordList = {
   words: Word[] | undefined;
   serachTerm?: string;
+  isShowMeanings?: boolean;
 };
 
-const WordList = ({ words, serachTerm }: TWordList) => {
+const WordList = ({ words, serachTerm, isShowMeanings }: TWordList) => {
   const emptyNode =
     serachTerm && serachTerm.trim() !== "" && words && words.length === 0 ? (
       <NotFoundState />
@@ -21,7 +22,9 @@ const WordList = ({ words, serachTerm }: TWordList) => {
     <BaseList
       items={words}
       renderEmpty={emptyNode}
-      renderItem={(word) => <WordItem word={word} />}
+      renderItem={(word) => (
+        <WordItem word={word} isShowMeanings={isShowMeanings} />
+      )}
       bottomPadding={120}
     />
   );

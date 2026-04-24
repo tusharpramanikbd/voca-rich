@@ -1,5 +1,9 @@
 import { useNavigate } from "react-router";
-import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import {
+  ChevronLeftIcon,
+  EyeIcon,
+  EyeSlashIcon,
+} from "@heroicons/react/24/solid";
 
 type THeader = {
   title: string;
@@ -8,6 +12,9 @@ type THeader = {
   canGoBack?: boolean;
   classes?: string;
   onGoBack?: () => void;
+  showToggleMeanings?: boolean;
+  isShowMeanings?: boolean;
+  onClickToggleMeaning?: () => void;
 };
 
 const Header = ({
@@ -17,6 +24,9 @@ const Header = ({
   canGoBack,
   classes,
   onGoBack,
+  showToggleMeanings,
+  isShowMeanings = false,
+  onClickToggleMeaning,
 }: THeader) => {
   const navigate = useNavigate();
 
@@ -44,11 +54,23 @@ const Header = ({
         <h1 className="text-3xl font-bold text-white">{title}</h1>
       </div>
 
-      {unit && itemCount !== undefined && (
-        <p className="text-teal-100 text-lg">
-          {itemCount} {unit}
-        </p>
-      )}
+      <div className="flex w-full items-center justify-between">
+        {unit && itemCount !== undefined && (
+          <p className="text-teal-100 text-lg">
+            {itemCount} {unit}
+          </p>
+        )}
+
+        {showToggleMeanings && (
+          <button onClick={onClickToggleMeaning} className="p-4">
+            {isShowMeanings ? (
+              <EyeSlashIcon className="w-6 h-6 text-white" />
+            ) : (
+              <EyeIcon className="w-6 h-6 text-white" />
+            )}
+          </button>
+        )}
+      </div>
     </div>
   );
 };

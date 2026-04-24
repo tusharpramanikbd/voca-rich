@@ -6,8 +6,11 @@ import ChallengeFAB from "./ChallengeFAB";
 import WordList from "./WordList";
 import WordSearch from "./WordSearch";
 import { useGroupsContext } from "../../providers/GroupsProvider";
+import { useState } from "react";
 
 const WordsPageContent = () => {
+  const [showMeanings, setShowMeanings] = useState(false);
+
   const { groups, selectedGroupId, setSelectedGroupId, openCreateGroup } =
     useGroupsContext();
   const { moduleName, moduleId, words, wordCount, searchTerm, setSearchTerm } =
@@ -22,6 +25,9 @@ const WordsPageContent = () => {
         unit={wordCount > 1 ? "words" : "word"}
         itemCount={wordCount ?? 0}
         canGoBack={true}
+        showToggleMeanings={true}
+        isShowMeanings={showMeanings}
+        onClickToggleMeaning={() => setShowMeanings(!showMeanings)}
       />
 
       <GroupList
@@ -33,7 +39,11 @@ const WordsPageContent = () => {
 
       <WordSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-      <WordList words={words} serachTerm={searchTerm} />
+      <WordList
+        words={words}
+        serachTerm={searchTerm}
+        isShowMeanings={showMeanings}
+      />
 
       <ChallengeFAB />
       <AddWordFAB />

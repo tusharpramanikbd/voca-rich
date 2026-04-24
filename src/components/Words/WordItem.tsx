@@ -10,9 +10,10 @@ import { ALL_GROUP_ID } from "../../hooks/useGroups";
 
 type TWordItem = {
   word: Word;
+  isShowMeanings?: boolean;
 };
 
-const WordItem = ({ word }: TWordItem) => {
+const WordItem = ({ word, isShowMeanings }: TWordItem) => {
   const { openActions, openDetails } = useWordsModal();
   const { selectedGroupId } = useGroupsContext();
 
@@ -33,7 +34,11 @@ const WordItem = ({ word }: TWordItem) => {
             <CheckCircleIcon className="w-4 h-4 text-teal-500" />
           )}
         </div>
-        <p className="text-lg text-gray-700 leading-relaxed">{word?.meaning}</p>
+        {isShowMeanings && (
+          <p className="text-lg text-gray-700 leading-relaxed">
+            {word?.meaning}
+          </p>
+        )}
       </div>
 
       {/* Single 3-dots button */}
