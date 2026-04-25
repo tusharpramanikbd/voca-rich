@@ -6,7 +6,7 @@ const SplashPage = () => {
       <div className="transition-all duration-300 opacity-100 scale-100">
         <AppLogo className="w-72 h-40 animate-pulse mx-auto" fill="#2b7fff" />
 
-        <p className="text-md text-gray-700 mt-6 text-center">Version: 1.0.0</p>
+        <p className="text-md text-gray-700 mt-6 text-center">Version: 1.1.0</p>
       </div>
     </div>
   );

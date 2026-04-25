@@ -1,9 +1,6 @@
 import { useNavigate } from "react-router";
-import {
-  ChevronLeftIcon,
-  EyeIcon,
-  EyeSlashIcon,
-} from "@heroicons/react/24/solid";
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import VisibilitySelector, { type VisibilityMode } from "./VisibilitySelector";
 
 type THeader = {
   title: string;
@@ -12,9 +9,9 @@ type THeader = {
   canGoBack?: boolean;
   classes?: string;
   onGoBack?: () => void;
-  showToggleMeanings?: boolean;
-  isShowMeanings?: boolean;
-  onClickToggleMeaning?: () => void;
+  showVisibilitySelector?: boolean;
+  visibilityMode?: VisibilityMode;
+  onChangeVisibilityMode?: (mode: VisibilityMode) => void;
 };
 
 const Header = ({
@@ -24,9 +21,9 @@ const Header = ({
   canGoBack,
   classes,
   onGoBack,
-  showToggleMeanings,
-  isShowMeanings = false,
-  onClickToggleMeaning,
+  showVisibilitySelector,
+  visibilityMode = "BOTH",
+  onChangeVisibilityMode,
 }: THeader) => {
   const navigate = useNavigate();
 
@@ -61,14 +58,11 @@ const Header = ({
           </p>
         )}
 
-        {showToggleMeanings && (
-          <button onClick={onClickToggleMeaning} className="p-4">
-            {isShowMeanings ? (
-              <EyeSlashIcon className="w-6 h-6 text-white" />
-            ) : (
-              <EyeIcon className="w-6 h-6 text-white" />
-            )}
-          </button>
+        {showVisibilitySelector && (
+          <VisibilitySelector
+            value={visibilityMode}
+            onChange={(mode) => onChangeVisibilityMode?.(mode)}
+          />
         )}
       </div>
     </div>

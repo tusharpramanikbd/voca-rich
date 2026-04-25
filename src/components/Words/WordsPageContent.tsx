@@ -7,9 +7,10 @@ import WordList from "./WordList";
 import WordSearch from "./WordSearch";
 import { useGroupsContext } from "../../providers/GroupsProvider";
 import { useState } from "react";
+import type { VisibilityMode } from "../Common/VisibilitySelector";
 
 const WordsPageContent = () => {
-  const [showMeanings, setShowMeanings] = useState(false);
+  const [visibilityMode, setVisibilityMode] = useState<VisibilityMode>("BOTH");
 
   const { groups, selectedGroupId, setSelectedGroupId, openCreateGroup } =
     useGroupsContext();
@@ -25,9 +26,9 @@ const WordsPageContent = () => {
         unit={wordCount > 1 ? "words" : "word"}
         itemCount={wordCount ?? 0}
         canGoBack={true}
-        showToggleMeanings={true}
-        isShowMeanings={showMeanings}
-        onClickToggleMeaning={() => setShowMeanings(!showMeanings)}
+        showVisibilitySelector={true}
+        visibilityMode={visibilityMode}
+        onChangeVisibilityMode={setVisibilityMode}
       />
 
       <GroupList
@@ -42,7 +43,7 @@ const WordsPageContent = () => {
       <WordList
         words={words}
         serachTerm={searchTerm}
-        isShowMeanings={showMeanings}
+        visibilityMode={visibilityMode}
       />
 
       <ChallengeFAB />

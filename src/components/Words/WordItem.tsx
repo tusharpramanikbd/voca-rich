@@ -7,18 +7,50 @@ import {
 import { useWordsModal } from "../../providers/WordsModalProvider";
 import { useGroupsContext } from "../../providers/GroupsProvider";
 import { ALL_GROUP_ID } from "../../hooks/useGroups";
+import type { VisibilityMode } from "../Common/VisibilitySelector";
 
 type TWordItem = {
   word: Word;
-  isShowMeanings?: boolean;
+  visibilityMode?: VisibilityMode;
 };
 
-const WordItem = ({ word, isShowMeanings }: TWordItem) => {
+const WordItem = ({ word, visibilityMode }: TWordItem) => {
   const { openActions, openDetails } = useWordsModal();
   const { selectedGroupId } = useGroupsContext();
 
   const isAllGroup = selectedGroupId === ALL_GROUP_ID;
   const isWordGrouped = !!word.groupId;
+
+  const Word = (
+    <div className="flex items-center gap-1">
+      <h3 className="text-2xl font-bold text-gray-900 mb-1">{word?.word}</h3>
+      {isAllGroup && isWordGrouped && (
+        <CheckCircleIcon className="w-4 h-4 text-teal-500" />
+      )}
+    </div>
+  );
+
+  const Meaning = (
+    <div className="flex items-center gap-1">
+      <h3 className="text-2xl font-bold text-gray-900 mb-1">{word?.meaning}</h3>
+      {isAllGroup && isWordGrouped && (
+        <CheckCircleIcon className="w-4 h-4 text-teal-500" />
+      )}
+    </div>
+  );
+
+  const Both = (
+    <>
+      <div className="flex items-center gap-1">
+        <h3 className="text-2xl font-bold text-gray-900 mb-1">{word?.word}</h3>
+        {isAllGroup && isWordGrouped && (
+          <CheckCircleIcon className="w-4 h-4 text-teal-500" />
+        )}
+      </div>
+
+      <p className="text-lg text-gray-700 leading-relaxed">{word?.meaning}</p>
+    </>
+  );
 
   return (
     <div
@@ -26,19 +58,9 @@ const WordItem = ({ word, isShowMeanings }: TWordItem) => {
       className="bg-white/70 backdrop-blur-md rounded-2xl p-3 shadow-lg border border-white/50 flex items-center justify-between"
     >
       <div className="flex-1">
-        <div className="flex items-center gap-1">
-          <h3 className="text-2xl font-bold text-gray-900 mb-1">
-            {word?.word}
-          </h3>
-          {isAllGroup && isWordGrouped && (
-            <CheckCircleIcon className="w-4 h-4 text-teal-500" />
-          )}
-        </div>
-        {isShowMeanings && (
-          <p className="text-lg text-gray-700 leading-relaxed">
-            {word?.meaning}
-          </p>
-        )}
+        {visibilityMode === "WORD" ? Word : null}
+        {visibilityMode === "MEANING" ? Meaning : null}
+        {visibilityMode === "BOTH" ? Both : null}
       </div>
 
       {/* Single 3-dots button */}
