@@ -33,7 +33,7 @@ const VisibilitySelector = ({ value, onChange }: Props) => {
   return (
     <div ref={ref} className="relative">
       {/* trigger */}
-      <button onClick={() => setOpen((prev) => !prev)} className="p-4">
+      <button onClick={() => setOpen((prev) => !prev)} className="p-2">
         <EyeIcon className="w-6 h-6 text-white" />
       </button>
 

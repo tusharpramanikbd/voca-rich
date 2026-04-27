@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router";
 import type { Word } from "../db/vocarichDb";
 import { useLiveQuery } from "dexie-react-hooks";
 import { countWordsByModule, listWordsByModule } from "../db/crudWords";
+import { shuffle } from "../utils/challengeQuestionFactory";
 
 const useWords = (selectedGroupId?: string) => {
   const { module } = useParams();
   const moduleId = module ? module.split("+")[0] : null;
   const moduleName = module ? module.split("+")[1] : null;
+
+  const [isShuffled, setIsShuffled] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -34,6 +37,12 @@ const useWords = (selectedGroupId?: string) => {
     undefined,
   ) as Word[] | undefined;
 
+  const shuffledWords = useMemo(() => {
+    if (!isShuffled) return words;
+
+    return shuffle(words || []);
+  }, [words, isShuffled]);
+
   const wordCount =
     useLiveQuery(async () => {
       if (!moduleId) return 0;
@@ -44,10 +53,12 @@ const useWords = (selectedGroupId?: string) => {
     module,
     moduleId,
     moduleName,
-    words,
+    words: shuffledWords,
     wordCount,
     searchTerm,
     setSearchTerm,
+    isShuffled,
+    setIsShuffled,
   };
 };
 

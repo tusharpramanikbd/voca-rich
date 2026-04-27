@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
-import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { ChevronLeftIcon, NumberedListIcon } from "@heroicons/react/24/solid";
 import VisibilitySelector, { type VisibilityMode } from "./VisibilitySelector";
+import ShuffleIcon from "../../assets/ShuffleIcon";
 
 type THeader = {
   title: string;
@@ -12,6 +13,9 @@ type THeader = {
   showVisibilitySelector?: boolean;
   visibilityMode?: VisibilityMode;
   onChangeVisibilityMode?: (mode: VisibilityMode) => void;
+  showShuffleButton?: boolean;
+  isShuffled?: boolean;
+  onToggleShuffle?: () => void;
 };
 
 const Header = ({
@@ -24,6 +28,9 @@ const Header = ({
   showVisibilitySelector,
   visibilityMode = "BOTH",
   onChangeVisibilityMode,
+  showShuffleButton,
+  isShuffled,
+  onToggleShuffle,
 }: THeader) => {
   const navigate = useNavigate();
 
@@ -58,12 +65,24 @@ const Header = ({
           </p>
         )}
 
-        {showVisibilitySelector && (
-          <VisibilitySelector
-            value={visibilityMode}
-            onChange={(mode) => onChangeVisibilityMode?.(mode)}
-          />
-        )}
+        <div className="flex items-center gap-4">
+          {showShuffleButton && (
+            <button onClick={onToggleShuffle} className="p-2">
+              {isShuffled ? (
+                <NumberedListIcon className="w-6 h-6 text-white" />
+              ) : (
+                <ShuffleIcon color="#FFFFFF" width={20} height={20} />
+              )}
+            </button>
+          )}
+
+          {showVisibilitySelector && (
+            <VisibilitySelector
+              value={visibilityMode}
+              onChange={(mode) => onChangeVisibilityMode?.(mode)}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

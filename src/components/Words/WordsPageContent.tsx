@@ -14,8 +14,16 @@ const WordsPageContent = () => {
 
   const { groups, selectedGroupId, setSelectedGroupId, openCreateGroup } =
     useGroupsContext();
-  const { moduleName, moduleId, words, wordCount, searchTerm, setSearchTerm } =
-    useWords(selectedGroupId);
+  const {
+    moduleName,
+    moduleId,
+    words,
+    wordCount,
+    searchTerm,
+    setSearchTerm,
+    isShuffled,
+    setIsShuffled,
+  } = useWords(selectedGroupId);
 
   if (!moduleId) return <div>Invalid module</div>;
 
@@ -29,6 +37,9 @@ const WordsPageContent = () => {
         showVisibilitySelector={true}
         visibilityMode={visibilityMode}
         onChangeVisibilityMode={setVisibilityMode}
+        showShuffleButton={true}
+        isShuffled={isShuffled}
+        onToggleShuffle={() => setIsShuffled(!isShuffled)}
       />
 
       <GroupList
